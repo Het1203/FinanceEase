@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import budgetRoutes from './routes/budgetRoutes.js';
 import goalRoutes from './routes/goalRoutes.js';
 import investmentRoutes from './routes/investmentRoutes.js';
-import userProfileRoutes from './routes/userProfileRoutes.js';
 import assetRoutes from './routes/assetRoutes.js';
 import liabilityRoutes from './routes/liabilityRoutes.js';
 import { errorHandler } from './middlewares/errorMiddleware.js';
@@ -16,20 +16,18 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors(
-    {
-        origin: 'http://localhost:5173',
-        credentials: true
-    }
-));
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/budget', budgetRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/investments', investmentRoutes);
-app.use('/api/profile', userProfileRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/liabilities', liabilityRoutes);
 

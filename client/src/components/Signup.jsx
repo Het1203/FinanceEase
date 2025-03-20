@@ -39,11 +39,11 @@ function Signup() {
         <div className="flex min-h-screen">
             {/* Left side - Logo */}
             <div className="w-3/5 bg-white flex flex-col items-center justify-center p-8">
-                <h1 className="text-4xl font-bold text-[#4A4A4A] mb-6">FinanceEase</h1>
+                <h1 className="text-5xl font-bold text-[#4A4A4A] mb-10">FinanceEase</h1>
                 <div className="md:w-1/2 flex mx-28 justify-center">
                     <img src="/logo2.png" alt="Financial illustration" className="max-w-full h-auto" />
                 </div>
-                <p className="text-2xl text-[#4A4A4A] mt-6">Unlock Your Financial Potential!</p>
+                <p className="text-2xl font-bold text-[#4A4A4A] mt-6">Unlock Your Financial Potential!</p>
             </div>
 
             {/* Right side - Signup form */}
@@ -54,7 +54,7 @@ function Signup() {
                     <div>
                         <input
                             type="text"
-                            placeholder="Username"
+                            placeholder="Full Name"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
@@ -112,7 +112,7 @@ function Signup() {
 
                     <button
                         type="submit"
-                        className="w-full bg-[#D9D9D9] font-medium py-2 rounded hover:bg-[#c0c0c0] transition-colors"
+                        className="w-full bg-[#D9D9D9] text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
                     >
                         Signup
                     </button>

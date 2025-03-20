@@ -5,7 +5,7 @@ import { Eye, EyeOff } from "lucide-react";
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function Login() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username,
+                email,
                 password,
             }),
             credentials: 'include', // Include cookies in the request
@@ -26,7 +26,7 @@ function Login() {
 
         if (response.ok) {
             // Handle successful login (e.g., navigate to home page)
-            navigate("/home");
+            navigate("/dashboard/profile");
         } else {
             // Handle error (e.g., display error message)
             console.error("Login failed");
@@ -36,25 +36,25 @@ function Login() {
     return (
         <div className="flex min-h-screen">
             {/* Left side - Logo */}
-            <div className="w-1/2 bg-white flex flex-col items-center justify-center p-8">
-                <h1 className="text-4xl font-bold text-[#4A4A4A] mb-6">FinanceEase</h1>
+            <div className="w-2/3 bg-white flex flex-col items-center justify-center p-8">
+                <h1 className="text-5xl font-bold text-[#4A4A4A] mb-10">FinanceEase</h1>
                 <div className="md:w-1/2 flex mx-28 justify-center">
                     <img src="/logo2.png" alt="Financial illustration" className="max-w-full h-auto" />
                 </div>
-                <p className="text-2xl text-[#4A4A4A] mt-6">Unlock Your Financial Potential!</p>
+                <p className="text-2xl font-bold text-[#4A4A4A] mt-6">Unlock Your Financial Potential!</p>
             </div>
 
             {/* Right side - Login form */}
-            <div className="w-1/2 bg-[#B3A9A2] flex flex-col items-center justify-center p-8">
+            <div className="w-1/3 bg-[#B3A9A2] flex flex-col items-center justify-center p-8">
                 <h2 className="text-3xl font-bold text-white mb-8">Login</h2>
 
                 <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
                     <div>
                         <input
-                            type="text"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
                         />
                     </div>
@@ -76,7 +76,7 @@ function Login() {
                         </button>
                     </div>
 
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         <input
                             type="checkbox"
                             id="remember-me"
@@ -87,11 +87,11 @@ function Login() {
                         <label htmlFor="remember-me" className="text-sm text-white">
                             Remember me
                         </label>
-                    </div>
+                    </div> */}
 
                     <button
                         type="submit"
-                        className="w-full bg-[#D9D9D9] text-[#4A4A4A] font-medium py-2 rounded hover:bg-[#c0c0c0] transition-colors"
+                        className="w-full bg-[#D9D9D9] mt-5 text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
                     >
                         Login
                     </button>
