@@ -6,22 +6,14 @@ const budgetSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    category: {
-        type: String,
-        required: true,
-    },
-    amount: {
-        type: Number,
-        required: true,
-    },
-    month: {
-        type: Number,
-        required: true,
-    },
-    year: {
-        type: Number,
-        required: true,
-    },
+    month: { type: String, required: true },
+    year: { type: Number, required: true },
+    budget: [
+        {
+            category: { type: String, required: true },
+            amount: { type: Number, required: true },
+        },
+    ],
 }, { timestamps: true });
 
 const Budget = mongoose.model('Budget', budgetSchema);

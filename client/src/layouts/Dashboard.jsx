@@ -12,7 +12,7 @@ function Dashboard() {
             {/* Main content */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Top header with search and profile */}
-                <header className="bg-white shadow-sm p-3 flex items-center justify-between">
+                <header className="bg-[#F2F1EF] shadow-sm p-3 flex items-center justify-between">
                     <SearchBar />
                     {/* <div className="flex items-center">
                         <UserCircle className="h-8 w-8 text-gray-500" />

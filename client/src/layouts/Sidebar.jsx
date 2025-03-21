@@ -33,10 +33,12 @@ function Sidebar() {
     };
 
     return (
-        <div className="w-64 bg-gray-100 border-r border-[#B1A6A4] flex flex-col h-full">
+        <div className="w-64 bg-[#F2F1EF] border-r border-[#B1A6A4] flex flex-col h-full">
             {/* Logo */}
             <div className="p-4 border-b border-[#B1A6A4]">
-                <h1 className="text-xl font-bold text-[#4A4A4A]">FinanceEase</h1>
+                <Link to="/dashboard/home">
+                    <h1 className="text-xl font-bold text-[#4A4A4A]">FinanceEase</h1>
+                </Link>
             </div>
 
             {/* Navigation */}

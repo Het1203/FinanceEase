@@ -1,65 +1,76 @@
 import Budget from '../models/Budget.js';
 
-const createBudget = async (req, res) => {
-    const { category, amount, month, year } = req.body;
+export const createBudget = async (req, res) => {
+    const userId = req.user._id;
+    const { budget } = req.body;
+    const currentDate = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentMonth = monthNames[currentDate.getMonth()];
+    const currentYear = currentDate.getFullYear();
 
     try {
-        const budget = await Budget.create({
-            user: req.user._id,
-            category,
-            amount,
-            month,
-            year,
-        });
+        let existingBudget = await Budget.findOne({ user: userId, month: currentMonth, year: currentYear });
 
-        res.status(201).json(budget);
+        if (existingBudget) {
+            // Update the existing budget
+            budget.forEach(newItem => {
+                const existingItem = existingBudget.budget.find(item => item.category === newItem.category);
+                if (existingItem) {
+                    existingItem.amount += Number(newItem.amount); // Add the new amount to the existing amount
+                } else {
+                    existingBudget.budget.push(newItem);
+                }
+            });
+            await existingBudget.save();
+            res.status(200).json(existingBudget);
+        } else {
+            // Create a new budget
+            const newBudget = new Budget({ user: userId, month: currentMonth, year: currentYear, budget });
+            await newBudget.save();
+            res.status(201).json(newBudget);
+        }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
 
-const getCurrentBudget = async (req, res) => {
-    try {
-        const budget = await Budget.findOne({
-            user: req.user._id,
-            month: new Date().getMonth() + 1,
-            year: new Date().getFullYear(),
-        });
+export const getCurrentBudget = async (req, res) => {
+    const userId = req.user._id;
+    const currentDate = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentMonth = monthNames[currentDate.getMonth()];
+    const currentYear = currentDate.getFullYear();
 
-        res.json(budget);
+    try {
+        const currentBudget = await Budget.findOne({ user: userId, month: currentMonth, year: currentYear });
+        res.status(200).json(currentBudget || { month: currentMonth, year: currentYear, budget: [] });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
 
-const getPreviousBudgets = async (req, res) => {
-    try {
-        const budgets = await Budget.find({
-            user: req.user._id,
-            month: { $lte: new Date().getMonth() },
-            year: new Date().getFullYear(),
-        }).sort({ month: -1 }).limit(2);
-
-        res.json(budgets);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-const updateBudget = async (req, res) => {
-    const { category, amount } = req.body;
+export const getPreviousBudgets = async (req, res) => {
+    const userId = req.user._id;
+    const currentDate = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentMonthIndex = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
 
     try {
-        const budget = await Budget.findOneAndUpdate(
-            { user: req.user._id, month: new Date().getMonth() + 1, year: new Date().getFullYear() },
-            { category, amount },
-            { new: true }
-        );
-
-        res.json(budget);
+        const previousBudgets = [];
+        for (let i = 1; i <= 2; i++) {
+            let monthIndex = currentMonthIndex - i;
+            let year = currentYear;
+            if (monthIndex < 0) {
+                monthIndex += 12;
+                year -= 1;
+            }
+            const month = monthNames[monthIndex];
+            const budget = await Budget.findOne({ user: userId, month, year });
+            previousBudgets.push(budget || { month, year, budget: [] });
+        }
+        res.status(200).json(previousBudgets);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
-
-export { createBudget, getCurrentBudget, getPreviousBudgets, updateBudget };
