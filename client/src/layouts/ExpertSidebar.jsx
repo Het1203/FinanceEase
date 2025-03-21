@@ -53,7 +53,7 @@ function ExpertSidebar() {
 
             {/* Logout */}
             <div className="p-4 border-t border-[#B1A6A4] mt-auto">
-                <Link to="/" onClick={handleLogout} className="block p-2 text-center text-[#4A4A4A] hover:underline">
+                <Link to="/" onClick={handleLogout} className="block p-2 text-2xl font-bold text-center text-[#4A4A4A] hover:underline">
                     Logout
                 </Link>
             </div>

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const blogSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Expert',
         required: true,
     },
     title: {
@@ -11,6 +11,10 @@ const blogSchema = new mongoose.Schema({
         required: true,
     },
     content: {
+        type: String,
+        required: true,
+    },
+    date: {
         type: String,
         required: true,
     },

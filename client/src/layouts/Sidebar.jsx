@@ -70,7 +70,7 @@ function Sidebar() {
 
             {/* Logout */}
             <div className="p-4 border-t border-[#B1A6A4]">
-                <button onClick={handleLogout} className="block w-full p-2 text-center text-[#4A4A4A] hover:underline">
+                <button onClick={handleLogout} className="block w-full text-2xl font-bold p-2 text-center text-[#4A4A4A] hover:underline">
                     Logout
                 </button>
             </div>

@@ -13,6 +13,7 @@ import liabilityRoutes from './routes/liabilityRoutes.js';
 import incomeRoutes from './routes/incomeRoutes.js';
 import { errorHandler } from './middlewares/errorMiddleware.js';
 import expertRoutes from './routes/expertRoutes.js';
+import blogRoutes from './routes/blogRoutes.js';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api/assets', assetRoutes);
 app.use('/api/liabilities', liabilityRoutes);
 app.use('/api/income', incomeRoutes);
 app.use('/api/expert', expertRoutes);
+app.use('/api/blogs', blogRoutes);
 
 app.use(errorHandler);
 
