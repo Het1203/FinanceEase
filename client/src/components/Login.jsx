@@ -23,21 +23,18 @@ function Login() {
 
         const data = await response.json();
         if (response.ok) {
-            // Log the entire response to inspect the token
-            console.log('Login response:', data);
+
 
             // Decode the token to get the user type
             const token = data.token;
             if (token) {
                 const tokenPayload = JSON.parse(atob(token.split('.')[1]));
-                console.log('Token payload:', tokenPayload); // Debugging log
                 const userType = tokenPayload.type;
-                console.log('User type:', userType); // Debugging log
 
                 if (userType === 'user') {
                     navigate('/dashboard/profile');
                 } else if (userType === 'expert') {
-                    navigate('/expert-dashboard');
+                    navigate('/expert/profile');
                 }
             } else {
                 console.error('Token is missing in the response');

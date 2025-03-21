@@ -1,6 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { registerExpert } from '../controllers/expertController.js';
+import { registerExpert, getExpertProfile, updateExpertProfile } from '../controllers/expertController.js';
+import { protect } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -17,5 +18,8 @@ router.post(
     ],
     registerExpert
 );
+
+router.get('/me', protect, getExpertProfile);
+router.put('/profile/update', protect, updateExpertProfile);
 
 export default router;

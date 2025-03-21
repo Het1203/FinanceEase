@@ -37,3 +37,40 @@ export const registerExpert = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+export const getExpertProfile = async (req, res) => {
+    try {
+        const expert = await Expert.findById(req.user.id);
+        if (!expert) {
+            return res.status(404).json({ message: 'Expert not found' });
+        }
+        res.json(expert);
+    } catch (error) {
+        console.error(error.message); // Log the error message
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const updateExpertProfile = async (req, res) => {
+    const { name, email, phoneNumber, age, occupation, expertise } = req.body;
+
+    try {
+        const expert = await Expert.findById(req.user.id);
+        if (!expert) {
+            return res.status(404).json({ message: 'Expert not found' });
+        }
+
+        expert.name = name || expert.name;
+        expert.email = email || expert.email;
+        expert.phoneNumber = phoneNumber || expert.phoneNumber;
+        expert.age = age || expert.age;
+        expert.occupation = occupation || expert.occupation;
+        expert.expertise = expertise || expert.expertise;
+
+        const updatedExpert = await expert.save();
+        res.json(updatedExpert);
+    } catch (error) {
+        console.error(error.message); // Log the error message
+        res.status(500).json({ message: error.message });
+    }
+};
