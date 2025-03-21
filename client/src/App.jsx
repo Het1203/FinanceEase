@@ -10,6 +10,7 @@ import Investments from './components/Investments';
 import Goals from './components/Goals';
 import Profile from './components/Profile';
 import Blogs from './components/Blogs';
+import ExpertRegister from "./components/ExpertRegister";
 import { Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/expert-register" element={<ExpertRegister />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<Navigate to="home" replace />} />
           <Route path="home" element={<Home />} />

@@ -4,9 +4,9 @@ import { Eye, EyeOff } from "lucide-react";
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -17,19 +17,33 @@ function Login() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
+            body: JSON.stringify({ email, password }),
             credentials: 'include', // Include cookies in the request
         });
 
+        const data = await response.json();
         if (response.ok) {
-            // Handle successful login (e.g., navigate to home page)
-            navigate("/dashboard/profile");
+            // Log the entire response to inspect the token
+            console.log('Login response:', data);
+
+            // Decode the token to get the user type
+            const token = data.token;
+            if (token) {
+                const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+                console.log('Token payload:', tokenPayload); // Debugging log
+                const userType = tokenPayload.type;
+                console.log('User type:', userType); // Debugging log
+
+                if (userType === 'user') {
+                    navigate('/dashboard/profile');
+                } else if (userType === 'expert') {
+                    navigate('/expert-dashboard');
+                }
+            } else {
+                console.error('Token is missing in the response');
+            }
         } else {
-            // Handle error (e.g., display error message)
-            console.error("Login failed");
+            setErrors([data.message]);
         }
     };
 
@@ -49,6 +63,15 @@ function Login() {
                 <h2 className="text-3xl font-bold text-white mb-8">Login</h2>
 
                 <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
+                    {errors.length > 0 && (
+                        <div className="bg-red-100 text-red-700 p-4 rounded">
+                            <ul>
+                                {errors.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                     <div>
                         <input
                             type="email"
@@ -76,19 +99,6 @@ function Login() {
                         </button>
                     </div>
 
-                    {/* <div className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="remember-me"
-                            checked={rememberMe}
-                            onChange={() => setRememberMe(!rememberMe)}
-                            className="mr-2"
-                        />
-                        <label htmlFor="remember-me" className="text-sm text-white">
-                            Remember me
-                        </label>
-                    </div> */}
-
                     <button
                         type="submit"
                         className="w-full bg-[#D9D9D9] mt-5 text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
@@ -102,6 +112,14 @@ function Login() {
                         </Link>
                     </div>
                 </form>
+                <div className="text-center mt-4">
+                    <p className="text-[#4A4A4A]">
+                        Don't have an account?{" "}
+                        <Link to="/signup" className="text-blue-900 font-bold hover:underline">
+                            Signup
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     );
