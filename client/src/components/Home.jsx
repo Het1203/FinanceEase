@@ -11,11 +11,13 @@ function Home() {
     const [incomeSources, setIncomeSources] = useState([]);
     const [liabilities, setLiabilities] = useState([]);
     const [assets, setAssets] = useState([]);
+    const [blogs, setBlogs] = useState([]);
+    const [selectedBlog, setSelectedBlog] = useState(null);
     const [user, setUser] = useState({
         name: '',
         email: '',
         occupation: '',
-        image: '/user-avatar.jpg' // Default image
+        image: '/person.png' // Default image
     });
 
     useEffect(() => {
@@ -27,6 +29,8 @@ function Home() {
                 });
                 if (response.ok) {
                     const data = await response.json();
+                    // Sort income sources by amount in descending order
+                    data.sort((a, b) => b.amount - a.amount);
                     setIncomeSources(data);
                 } else {
                     console.error('Failed to fetch income sources');
@@ -92,10 +96,28 @@ function Home() {
             }
         };
 
+        const fetchBlogs = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/blogs/allblogs', {
+                    method: 'GET',
+                    credentials: 'include', // Include cookies in the request
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setBlogs(data.slice(0, 5)); // Display only the first 5 blogs
+                } else {
+                    console.error('Failed to fetch blogs');
+                }
+            } catch (error) {
+                console.error('Error fetching blogs:', error);
+            }
+        };
+
         fetchIncomeSources();
         fetchLiabilities();
         fetchAssets();
         fetchUserProfile();
+        fetchBlogs();
     }, []);
 
     const handleAddIncomeSourceClick = () => {
@@ -116,7 +138,7 @@ function Home() {
 
             if (response.ok) {
                 const addedIncomeSource = await response.json();
-                setIncomeSources([...incomeSources, addedIncomeSource]);
+                setIncomeSources([...incomeSources, addedIncomeSource].sort((a, b) => b.amount - a.amount));
                 setNewIncomeSource({ name: '', amount: '' });
                 setIsIncomeModalOpen(false);
             } else {
@@ -145,26 +167,30 @@ function Home() {
         }
     };
 
+    const handleBlogClick = (blog) => {
+        setSelectedBlog(blog);
+    };
+
     return (
         <div className="space-y-6 ml-8 mt-5">
             <h1 className="text-4xl font-bold text-[#4A4A4A]">Overview</h1>
-            <p className="text-2xl text-[#FBFDFF] mb-5">Hello {user.name}, welcome back!</p>
+            <p className="text-2xl font-medium text-[#FBFDFF] mb-5">Hello {user.name}, welcome back!</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Income Sources */}
                 <div className="bg-[#697184] p-6 rounded-md shadow-sm">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-bold text-[#102647]">Heads of Income</h2>
-                        <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full" onClick={handleAddIncomeSourceClick}>
+                        <button className="bg-[#D8CFD0] text-[#1D3557] px-4 py-1 rounded-full" onClick={handleAddIncomeSourceClick}>
                             Add More
                         </button>
                     </div>
                     <div className="space-y-2">
                         {incomeSources.map((source) => (
                             <div key={source._id} className="flex justify-between items-center p-2 bg-[#D8CFD0] rounded-md">
-                                <span className="text-[#4A4A4A] text-xl font-bold">{source.name}</span>
-                                <span className="text-[#4A4A4A] text-xl font-bold ml-30">Rs. {source.amount}</span>
-                                <button onClick={() => handleDeleteIncomeSource(source._id)} className="mr-5 text-red-500">
+                                <span className="text-[#4A4A4A] text-xl font-bold flex-grow">{source.name}</span>
+                                <span className="text-[#4A4A4A] text-xl font-bold w-32 text-right">Rs. {source.amount}</span>
+                                <button onClick={() => handleDeleteIncomeSource(source._id)} className="ml-5 text-red-500">
                                     <img src="/Trash.svg" alt="Delete" className="w-7 h-10" />
                                 </button>
                             </div>
@@ -201,12 +227,12 @@ function Home() {
                         {liabilities.map((liability, index) => (
                             <div key={index} className="border-b pb-2">
                                 <div className="flex justify-between">
-                                    <span className="text-[#4A4A4A]">{liability.name}</span>
-                                    <span className="text-[#4A4A4A]">Due Date</span>
+                                    <span className="text-[#4A4A4A] text-xl font-bold">{liability.name}</span>
+                                    <span className="text-[#4A4A4A] text-xl font-bold">Due Date</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-[#4A4A4A] text-sm">Worth Rs. {liability.amount}</span>
-                                    <span className="text-[#4A4A4A] text-sm">{new Date(liability.dueDate).toISOString().split('T')[0]}</span>
+                                    <span className="text-[#4A4A4A] text-xl font-bold">worth Rs. {liability.amount}</span>
+                                    <span className="text-[#4A4A4A] text-xl font-bold">{new Date(liability.dueDate).toISOString().split('T')[0]}</span>
                                 </div>
                             </div>
                         ))}
@@ -236,31 +262,46 @@ function Home() {
                 <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-bold text-[#102647]">Blogs</h2>
-                        <a href="#" className="bg-[#697184] text-[#D8CFD0] px-4 py-1 rounded-full">
+                        <Link to="/dashboard/blogs" className="bg-[#697184] text-[#D8CFD0] px-4 py-1 rounded-full">
                             View all
-                        </a>
+                        </Link>
                     </div>
                     <div className="space-y-4">
-                        {[
-                            { title: "Finance & Economics", date: "Tom Rick • April 2023" },
-                            { title: "Secure Investments", date: "John Doe • May 2023" },
-                            { title: "Risks while Investing", date: "Jane Doe • April 2023" },
-                            { title: "Risks while Investing", date: "John Doe • April 2023" },
-                            { title: "Risks while Investing", date: "Jane Doe • April 2023" },
-                        ].map((blog, index) => (
-                            <div key={index} className="flex items-center space-x-3">
+                        {blogs.map((blog, index) => (
+                            <div key={index} className="flex items-center space-x-3 cursor-pointer border-b border-[#697184] pb-2 last:border-0" onClick={() => handleBlogClick(blog)}>
                                 <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
-                                    <img src="/user-avatar.jpg" alt="Author" className="w-full h-full object-cover" />
+                                    <img src="/person.png" alt="Author" className="w-full h-full object-cover" />
                                 </div>
                                 <div>
-                                    <h3 className="text-[#4A4A4A] font-medium">{blog.title}</h3>
-                                    <p className="text-xs text-gray-500">{blog.date}</p>
+                                    <h3 className="text-[#4A4A4A] text-xl font-bold">{blog.title}</h3>
+                                    <p className="text-xl font-bold text-[#4A4A4A]">{blog.author.name} • {blog.date}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+
+            {/* Blog Details Modal */}
+            {selectedBlog && (
+                <Modal isOpen={!!selectedBlog} onClose={() => setSelectedBlog(null)}>
+                    <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">{selectedBlog.title}</h2>
+                    <div className="space-y-4">
+                        <p className="text-xl text-blue-300 font-bold mb-10">
+                            {selectedBlog.author.name} • {selectedBlog.date}
+                        </p>
+                        <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
+                        <div className="flex justify-center space-x-2 mt-20">
+                            <button
+                                className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md"
+                                onClick={() => setSelectedBlog(null)}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </Modal>
+            )}
 
             {/* Add Income Source Modal */}
             <Modal isOpen={isIncomeModalOpen} onClose={() => setIsIncomeModalOpen(false)}>
