@@ -34,7 +34,9 @@ function ExpertSidebar() {
         <div className="w-64 bg-gray-100 border-r border-[#B1A6A4] flex flex-col h-full">
             {/* Logo */}
             <div className="p-4 border-b border-[#B1A6A4]">
-                <h1 className="text-3xl font-bold text-[#4A4A4A]">FinanceEase</h1>
+                <Link to="/expert/profile">
+                    <h1 className="text-3xl font-bold text-[#4A4A4A]">FinanceEase</h1>
+                </Link>
             </div>
 
             {/* Navigation */}

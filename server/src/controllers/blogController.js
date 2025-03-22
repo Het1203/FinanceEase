@@ -57,4 +57,24 @@ const deleteBlog = async (req, res) => {
     }
 };
 
-export { createBlog, getBlogs, getBlogById, deleteBlog };
+const getBlogsByExpert = async (req, res) => {
+    try {
+        const blogs = await Blog.find({ author: req.user._id }).populate('author', 'name');
+        res.json(blogs);
+    } catch (error) {
+        console.error('Error fetching blogs:', error.message);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getAllBlogs = async (req, res) => {
+    try {
+        const blogs = await Blog.find().populate('author', 'name');
+        res.json(blogs);
+    } catch (error) {
+        console.error('Error fetching blogs:', error.message);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export { createBlog, getBlogs, getBlogById, deleteBlog, getBlogsByExpert, getAllBlogs };

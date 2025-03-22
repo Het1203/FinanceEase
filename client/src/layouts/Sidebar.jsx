@@ -37,7 +37,7 @@ function Sidebar() {
             {/* Logo */}
             <div className="p-4 border-b border-[#B1A6A4]">
                 <Link to="/dashboard/home">
-                    <h1 className="text-xl font-bold text-[#4A4A4A]">FinanceEase</h1>
+                    <h1 className="text-3xl font-bold text-[#4A4A4A]">FinanceEase</h1>
                 </Link>
             </div>
 

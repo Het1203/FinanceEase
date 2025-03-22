@@ -33,7 +33,7 @@ function YourBlogs() {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/blogs', {
+                const response = await fetch('http://localhost:5000/api/blogs/myblogs', {
                     method: 'GET',
                     credentials: 'include', // Include cookies in the request
                 });
@@ -131,13 +131,13 @@ function YourBlogs() {
                         onClick={() => handleBlogClick(blog)}
                     >
                         <div>
-                            <h3 className="text-xl font-medium mb-1">{blog.title}</h3>
-                            <p className="text-sm text-blue-200">
+                            <h3 className="text-2xl font-medium mb-1">{blog.title}</h3>
+                            <p className="text-lg text-blue-100">
                                 {blog.author.name} • {blog.date}
                             </p>
                         </div>
                         <button onClick={(event) => handleDeleteBlog(event, index)} className="text-red-700">
-                            <img src="/Trash.svg" alt="Delete" className="w-8 h-10" />
+                            <img src="/Trash.svg" alt="Delete" className="w-10 h-12" />
                         </button>
                     </div>
                 ))}
@@ -186,7 +186,7 @@ function YourBlogs() {
                 <Modal isOpen={!!selectedBlog} onClose={() => setSelectedBlog(null)}>
                     <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">{selectedBlog.title}</h2>
                     <div className="space-y-4">
-                        <p className="text-xl text-blue-300 font-bold mb-10">
+                        <p className="text-xl text-blue-100 font-bold mb-10">
                             {selectedBlog.author.name} • {selectedBlog.date}
                         </p>
                         <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
