@@ -31,8 +31,8 @@ function Blogs() {
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold text-[#4A4A4A] mb-4">Blogs</h1>
+        <div className="ml-9 mt-4 mr-10">
+            <h1 className="text-4xl font-bold text-[#4A4A4A] mb-8">Blogs</h1>
             <div className="space-y-4 bg-[#697184] p-6 rounded-md shadow-sm">
                 {blogs.map((blog, index) => (
                     <div
