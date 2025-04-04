@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Modal from '../layouts/Modal'; // Assuming you have a Modal component
+import Modal from '../layouts/Modal';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -7,11 +7,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Budget() {
     const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
-    const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false); // For Expense Modal
+    const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
     const [budgetItems, setBudgetItems] = useState([{ category: '', amount: '' }]);
-    const [expenseItems, setExpenseItems] = useState([{ category: '', amount: '' }]); // For Expenses
+    const [expenseItems, setExpenseItems] = useState([{ category: '', amount: '' }]);
     const [currentMonthBudget, setCurrentMonthBudget] = useState([]);
-    const [currentMonthExpenses, setCurrentMonthExpenses] = useState([]); // For Current Month Expenses
+    const [currentMonthExpenses, setCurrentMonthExpenses] = useState([]);
     const [previousMonthBudgets, setPreviousMonthBudgets] = useState([]);
 
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6633', '#FF33FF', '#33FF33', '#33CCFF'];
@@ -42,7 +42,7 @@ function Budget() {
         };
 
         fetchCurrentBudget();
-        fetchCurrentExpenses(); // Fetch current month expenses
+        fetchCurrentExpenses();
         fetchPreviousBudgets();
     }, []);
 
@@ -69,12 +69,12 @@ function Budget() {
                 'Content-Type': 'application/json'
             },
             credentials: 'include',
-            body: JSON.stringify({ budget: budgetItems.map(item => ({ ...item, amount: Number(item.amount) })) }) // Ensure amount is a number
+            body: JSON.stringify({ budget: budgetItems.map(item => ({ ...item, amount: Number(item.amount) })) })
         });
 
         const newBudget = await response.json();
         setCurrentMonthBudget(newBudget.budget);
-        setBudgetItems([{ category: '', amount: '' }]); // Clear the budget items after saving
+        setBudgetItems([{ category: '', amount: '' }]);
         setIsBudgetModalOpen(false);
     };
 
@@ -101,12 +101,12 @@ function Budget() {
                 'Content-Type': 'application/json'
             },
             credentials: 'include',
-            body: JSON.stringify({ expenses: expenseItems.map(item => ({ ...item, amount: Number(item.amount) })) }) // Ensure amount is a number
+            body: JSON.stringify({ expenses: expenseItems.map(item => ({ ...item, amount: Number(item.amount) })) })
         });
 
         const newExpenses = await response.json();
         setCurrentMonthExpenses(newExpenses.expenses);
-        setExpenseItems([{ category: '', amount: '' }]); // Clear the expense items after saving
+        setExpenseItems([{ category: '', amount: '' }]);
         setIsExpenseModalOpen(false);
     };
 
