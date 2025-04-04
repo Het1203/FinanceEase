@@ -193,7 +193,7 @@ function Profile() {
 
     return (
         <div className="p-4">
-            <h1 className="text-4xl font-bold text-[#4A4A4A] ml-5 mb-4">Profile</h1>
+            <h1 className="text-4xl font-bold text-[#4A4A4A] ml-5 mb-3">Profile</h1>
             <div className="flex">
                 {/* Left half */}
                 <div className="w-3/5 p-5">
@@ -259,10 +259,10 @@ function Profile() {
                                     <div key={index} className="p-2">
                                         <div className="flex justify-between items-center">
                                             <div>
-                                                <p className="font-bold text-xl">{asset.name}</p>
-                                                <p className='text-[#F6F0F0]'>worth Rs. {asset.amount}</p>
+                                                <p className="font-bold text-xl text-[#102647]">{asset.name}</p>
+                                                <p className='text-dark'>worth Rs. {asset.amount}</p>
                                             </div>
-                                            <button onClick={() => handleDeleteAsset(index)} className="text-red-500">
+                                            <button onClick={() => handleDeleteAsset(index)} className="text-red-800">
                                                 <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
                                             </button>
                                         </div>
@@ -275,8 +275,8 @@ function Profile() {
                 {/* Right half */}
                 <div className="ml-20 w-2/5 p-5 rounded">
                     <div className="items-center mb-4">
-                        <p className='text-3xl font-bold ml-2 text-[#1D3557] mt-4'>
-                            “Do not save what is left after spending, but spend what is left after saving.” — Warren Buffett
+                        <p className='text-3xl font-bold ml-1 text-[#1D3557] mt-4 mr-20'>
+                            “Do not save what is left after spending, but spend what is left after saving.” <br /> - Warren Buffett
                         </p>
                     </div>
                     <div className="items-center mt-26 w-90 h-45 rounded-md bg-[#D8CFD0] mb-4 overflow-hidden">
