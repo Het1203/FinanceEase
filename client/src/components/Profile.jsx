@@ -206,7 +206,7 @@ function Profile() {
                                 <div className="w-2/3 flex flex-col">
                                     <div className="flex justify-between items-center">
                                         <h2 className="text-2xl font-bold text-[#1D3557]">Profile Information</h2>
-                                        <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full" onClick={handleEditClick}>
+                                        <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200" onClick={handleEditClick}>
                                             Edit
                                         </button>
                                     </div>
@@ -222,7 +222,7 @@ function Profile() {
                         <div className="flex-1 bg-[#D8CFD0] p-4 rounded mt-3">
                             <div className="flex justify-between items-center">
                                 <h2 className='text-2xl font-bold text-[#102647] ml-2'>Liabilities</h2>
-                                <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full" onClick={handleAddLiabilityClick}>
+                                <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200" onClick={handleAddLiabilityClick}>
                                     Add More
                                 </button>
                             </div>
@@ -250,7 +250,7 @@ function Profile() {
                         <div className="flex-1 bg-[#697184] p-4 rounded mt-3">
                             <div className="flex justify-between items-center">
                                 <h2 className='text-2xl font-bold text-[#102647] ml-2'>Assets</h2>
-                                <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full" onClick={handleAddAssetClick}>
+                                <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200" onClick={handleAddAssetClick}>
                                     Add More
                                 </button>
                             </div>
