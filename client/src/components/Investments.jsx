@@ -62,20 +62,19 @@ function Investments() {
     ]
 
     return (
-        <div className="space-y-6">
+        <div className="ml-9 mt-4 space-y-6 mr-15">
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold text-[#4A4A4A]">Invest, Track, Triumph!</h1>
+                <h1 className="text-4xl font-bold text-[#4A4A4A]">Invest, Track, Triumph!</h1>
                 <button className="bg-white text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">
                     Add Investment
                 </button>
             </div>
 
-            <div className="bg-[#4A6FA5] p-6 rounded-md shadow-sm">
-                <h2 className="text-xl font-medium text-white mb-4">Track Investments</h2>
-
-                <div className="bg-white rounded-md overflow-hidden">
+            <div className="bg-[#697184] p-6 rounded-md shadow-sm">
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-medium text-white">Track Investments</h2>
                     {/* Search and filter */}
-                    <div className="p-3 flex justify-between items-center border-b">
+                    <div className="flex items-center space-x-4">
                         <div className="relative w-64">
                             <input
                                 type="text"
@@ -86,42 +85,45 @@ function Investments() {
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <span className="text-sm text-gray-500">Sort by:</span>
+                            <span className="text-md ml-10 text-white">Sort by :</span>
                             <button className="flex items-center space-x-1 bg-gray-100 px-3 py-1 rounded-md text-sm">
                                 <span>Recent</span>
                                 <ChevronDown className="h-4 w-4" />
                             </button>
                         </div>
                     </div>
+                </div>
+
+                <div className="bg-gray-200 rounded-md overflow-hidden mb-8 shadow-sm">
 
                     {/* Table */}
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-gray-200">
                                 <tr>
-                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-2 text-left text-gray-500 uppercase tracking-wider">
                                         Type of Investment
                                     </th>
-                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-2 text-left text-gray-500 uppercase tracking-wider">
                                         Amount Invested
                                     </th>
-                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-2 text-left text-gray-500 uppercase tracking-wider">
                                         Holding Time
                                     </th>
-                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-2 text-left text-gray-500 uppercase tracking-wider">
                                         Expected Return
                                     </th>
-                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-2 text-left text-gray-500 uppercase tracking-wider">
                                         Time of Return
                                     </th>
-                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th className="px-4 py-2 text-left text-gray-500 uppercase tracking-wider">
                                         Status
                                     </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
                                 {investments.map((investment, index) => (
-                                    <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                                    <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-200"}>
                                         <td className="px-4 py-3 text-sm text-gray-900">{investment.type}</td>
                                         <td className="px-4 py-3 text-sm text-gray-900">{investment.amount}</td>
                                         <td className="px-4 py-3 text-sm text-gray-900">{investment.holdingTime}</td>
