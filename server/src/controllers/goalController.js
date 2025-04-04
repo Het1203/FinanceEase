@@ -1,15 +1,15 @@
 import Goal from '../models/Goal.js';
 
 const createGoal = async (req, res) => {
-    const { goalName, targetAmount, deadline, savedAmount } = req.body;
+    const { goalName, targetAmount, savedAmount, priority } = req.body;
 
     try {
         const goal = await Goal.create({
-            user: req.user._id,
+            userId: req.user._id,
             goalName,
             targetAmount,
-            deadline,
-            savedAmount
+            savedAmount,
+            priority,
         });
 
         res.status(201).json(goal);
@@ -20,7 +20,7 @@ const createGoal = async (req, res) => {
 
 const getGoals = async (req, res) => {
     try {
-        const goals = await Goal.find({ user: req.user._id });
+        const goals = await Goal.find({ userId: req.user._id });
 
         res.json(goals);
     } catch (error) {
@@ -29,12 +29,12 @@ const getGoals = async (req, res) => {
 };
 
 const updateGoal = async (req, res) => {
-    const { goalName, targetAmount, deadline, savedAmount } = req.body;
+    const { goalName, targetAmount, savedAmount, priority } = req.body;
 
     try {
         const goal = await Goal.findOneAndUpdate(
-            { _id: req.params.id, user: req.user._id },
-            { goalName, targetAmount, deadline, savedAmount },
+            { _id: req.params.id, userId: req.user._id },
+            { goalName, targetAmount, savedAmount, priority },
             { new: true }
         );
 
@@ -50,7 +50,7 @@ const updateGoal = async (req, res) => {
 
 const deleteGoal = async (req, res) => {
     try {
-        const goal = await Goal.findOneAndDelete({ _id: req.params.id, user: req.user._id });
+        const goal = await Goal.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
 
         if (!goal) {
             return res.status(404).json({ message: 'Goal not found' });

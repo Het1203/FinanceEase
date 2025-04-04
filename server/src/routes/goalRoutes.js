@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/create', protect, createGoal);
 router.get('/', protect, getGoals);
-router.patch('/update/:id', protect, updateGoal);
+router.put('/update/:id', protect, updateGoal);
 router.delete('/delete/:id', protect, deleteGoal);
 
 export default router;
