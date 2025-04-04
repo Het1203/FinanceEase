@@ -193,7 +193,8 @@ function Profile() {
 
     return (
         <div className="p-4">
-            <h1 className="text-4xl font-bold text-[#4A4A4A] ml-5 mb-3">Profile</h1>
+            <h1 className="text-4xl font-bold text-[#4A4A4A] ml-5 mb-2">Profile</h1>
+            <p className="text-xl text-gray-700 ml-5 mb-3">Manage your profile and financial information.</p>
             <div className="flex">
                 {/* Left half */}
                 <div className="w-3/5 p-5">
@@ -275,8 +276,8 @@ function Profile() {
                 {/* Right half */}
                 <div className="ml-20 w-2/5 p-5 rounded">
                     <div className="items-center mb-4">
-                        <p className='text-3xl font-bold ml-1 text-[#1D3557] mt-4 mr-20'>
-                            “Do not save what is left after spending, but spend what is left after saving.” <br /> - Warren Buffett
+                        <p className='text-2xl font-medium ml-1 text-gray-700 mt-4 mr-20'>
+                            “Do not save what is left after spending, but spend what is left after saving.” - Warren Buffett
                         </p>
                     </div>
                     <div className="items-center mt-26 w-90 h-45 rounded-md bg-[#D8CFD0] mb-4 overflow-hidden">

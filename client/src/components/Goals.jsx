@@ -124,7 +124,7 @@ function Goals() {
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-4xl font-bold text-[#4A4A4A]">Ownership Awaits, Start Calculating!</h1>
-                    <p className="text-xl mt-2 text-gray-600">Track your progress towards your financial goals.</p>
+                    <p className="text-xl mt-2 text-gray-700 mb-2">Track your progress towards your financial goals.</p>
                 </div>
             </div>
 
@@ -143,7 +143,7 @@ function Goals() {
                                 <div key={goal._id} className="bg-[#D8CFD0] p-4 rounded-md">
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
-                                            <h3 className="text-2xl font-medium text-[#1D3557]">{goal.goalName}</h3>
+                                            <h3 className="font-bold text-2xl text-[#1D3557]">{goal.goalName}</h3>
                                             <p className="text-lg text-dark">
                                                 Target Amount: Rs. {goal.targetAmount.toLocaleString()} <br /> Priority: {goal.priority}
                                             </p>
@@ -205,7 +205,7 @@ function Goals() {
                     </p>
                     <button
                         onClick={() => setShowAddModal(true)}
-                        className="flex items-center justify-center bg-[#D8CFD0] text-[#9E9797] font-bold text-lg px-4 py-2 rounded-md hover:bg-gray-100 transition-colors flex items-center gap-2"
+                        className="flex items-center justify-center bg-[#D8CFD0] text-[#8A8383] font-bold text-lg px-4 py-2 rounded-md hover:bg-gray-100 transition-colors flex items-center gap-2"
                     >
                         <Plus className="h-4 w-4" />
                         Create a Goal

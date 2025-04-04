@@ -32,7 +32,8 @@ function Blogs() {
 
     return (
         <div className="ml-9 mt-4 mr-10">
-            <h1 className="text-4xl font-bold text-[#4A4A4A] mb-8">Blogs</h1>
+            <h1 className="text-4xl font-bold text-[#4A4A4A] mb-2">Blogs</h1>
+            <p className="text-xl text-gray-700 mb-8">Explore our latest blogs and articles published by experts to enhance your financial knowledge.</p>
             <div className="space-y-4 bg-[#697184] p-6 rounded-md shadow-sm">
                 {blogs.map((blog, index) => (
                     <div
@@ -45,7 +46,7 @@ function Blogs() {
                         </div>
                         <div>
                             <h3 className="text-[#102647] text-2xl font-bold">{blog.title}</h3>
-                            <p className="text-lg font-medium text-dark">{blog.author.name} • {blog.date}</p>
+                            <p className="text-lg text-dark">{blog.author.name} • {blog.date}</p>
                         </div>
                     </div>
                 ))}
@@ -56,7 +57,7 @@ function Blogs() {
                 <Modal isOpen={!!selectedBlog} onClose={() => setSelectedBlog(null)}>
                     <h2 className="text-3xl flex justify-center text-[#102647] font-bold mt-3 mb-4">{selectedBlog.title}</h2>
                     <div className="space-y-4">
-                        <p className="text-xl text-dark font-bold mb-10">
+                        <p className="text-xl text-dark font-medium mb-10">
                             {selectedBlog.author.name} • {selectedBlog.date}
                         </p>
                         <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>

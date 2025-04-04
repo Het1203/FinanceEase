@@ -92,11 +92,11 @@ function Budget() {
     const currentYear = currentDate.getFullYear();
 
     return (
-        <div className="space-y-6 ml-8 mt-4">
+        <div className="space-y-6 ml-9 mt-4">
             <div className="flex justify-between items-center mb-10">
                 <div className='w-250'>
                     <h1 className="text-4xl font-bold text-[#4A4A4A]">Budget Your Month, Own Your Future!</h1>
-                    <p className="text-[#F9FAFC] font-medium mt-4 text-2xl">Create your monthly budgets here.</p>
+                    <p className="text-gray-700 mt-2 text-xl">Create your monthly budgets here.</p>
                 </div>
             </div>
 
@@ -121,7 +121,7 @@ function Budget() {
                     </div>
 
                     <div className="flex justify-center mt-6">
-                        <button className="bg-[#9E9797] text-[#4A4A4A] font-bold px-6 py-2 rounded-md transition-colors" onClick={() => setIsBudgetModalOpen(true)}>
+                        <button className="bg-[#9E9797] text-[#4A4A4A] font-bold px-6 py-2 rounded-md transition-colors hover:bg-[#FFFCFC]" onClick={() => setIsBudgetModalOpen(true)}>
                             Create Budget
                         </button>
                     </div>
