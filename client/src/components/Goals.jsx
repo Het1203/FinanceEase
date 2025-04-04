@@ -120,10 +120,10 @@ function Goals() {
     };
 
     return (
-        <div className="ml-9 mt-3 space-y-6">
+        <div className="ml-9 mt-4 space-y-6 mr-15">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold text-[#4A4A4A]">Ownership Awaits, Start Calculating!</h1>
+                    <h1 className="text-4xl font-bold text-[#4A4A4A]">Ownership Awaits, Start Calculating!</h1>
                     <p className="text-xl mt-2 text-gray-600">Track your progress towards your financial goals.</p>
                 </div>
             </div>
