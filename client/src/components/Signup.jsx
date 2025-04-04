@@ -8,10 +8,70 @@ function Signup() {
     const [email, setEmail] = useState("");
     const [profession, setProfession] = useState("");
     const [password, setPassword] = useState("");
+
+    const [usernameError, setUsernameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [professionError, setProfessionError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+
     const navigate = useNavigate();
+
+    const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setPasswordError(
+                "Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character."
+            );
+        } else {
+            setPasswordError("");
+        }
+    };
+
+    const validateFields = () => {
+        let isValid = true;
+
+        if (!username.trim()) {
+            setUsernameError("Username is required.");
+            isValid = false;
+        } else {
+            setUsernameError("");
+        }
+
+        if (!email.trim()) {
+            setEmailError("Email is required.");
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            setEmailError("Invalid email format.");
+            isValid = false;
+        } else {
+            setEmailError("");
+        }
+
+        if (!profession.trim()) {
+            setProfessionError("Profession is required.");
+            isValid = false;
+        } else {
+            setProfessionError("");
+        }
+
+        if (passwordError) {
+            isValid = false;
+        }
+
+        return isValid;
+    };
+
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+        validatePassword(newPassword);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateFields()) {
+            return;
+        }
 
         const response = await fetch("http://localhost:5000/api/auth/register", {
             method: "POST",
@@ -27,10 +87,8 @@ function Signup() {
         });
 
         if (response.ok) {
-            // Handle successful signup (e.g., navigate to login page)
             navigate("/login");
         } else {
-            // Handle error (e.g., display error message)
             console.error("Signup failed");
         }
     };
@@ -59,6 +117,7 @@ function Signup() {
                             onChange={(e) => setUsername(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
                         />
+                        {usernameError && <p className="text-red-500 text-sm mt-1">{usernameError}</p>}
                     </div>
 
                     <div className="relative">
@@ -69,6 +128,7 @@ function Signup() {
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
                         />
+                        {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
                     </div>
 
                     <div>
@@ -79,6 +139,7 @@ function Signup() {
                             onChange={(e) => setProfession(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
                         />
+                        {professionError && <p className="text-red-500 text-sm mt-1">{professionError}</p>}
                     </div>
 
                     <div className="relative">
@@ -86,7 +147,7 @@ function Signup() {
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
                         />
                         <button
@@ -96,18 +157,7 @@ function Signup() {
                         >
                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
-                    </div>
-
-                    <div className="w-1/2 ml-23 flex items-center justify-center bg-[#D9D9D9] p-2">
-                        <div className="flex items-center gap-2">
-                            <input type="checkbox" id="recaptcha" className="h-4 w-4" />
-                            <label htmlFor="recaptcha" className="text-xs text-gray-600">
-                                I'm not a robot
-                            </label>
-                        </div>
-                        <div className="ml-4">
-                            <img src="/reCaptcha.png" alt="reCAPTCHA" className="h-10 w-10" />
-                        </div>
+                        {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                     </div>
 
                     <button
