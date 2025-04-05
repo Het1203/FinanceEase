@@ -1,12 +1,12 @@
 import User from '../models/User.js';
 
 const updateUserProfile = async (req, res) => {
-    const { name, email, phone, age, occupation, maritalStatus } = req.body;
+    const { username, email, phone, age, profession, maritalStatus } = req.body;
 
     try {
         const user = await User.findByIdAndUpdate(
             req.user._id,
-            { name, email, phone, age, occupation, maritalStatus },
+            { username, email, phone, age, profession, maritalStatus },
             { new: true }
         );
 

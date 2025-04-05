@@ -3,9 +3,9 @@ import Modal from '../layouts/Modal';
 
 function Profile() {
     const [user, setUser] = useState({
-        name: '',
+        username: '',
         email: '',
-        occupation: '',
+        profession: '',
         phone: '',
         age: '',
         maritalStatus: ''
@@ -31,36 +31,38 @@ function Profile() {
     });
     const [assets, setAssets] = useState([]);
 
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/api/auth/me', {
-                    method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+    const fetchUserProfile = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/me', {
+                method: 'GET',
+                credentials: 'include',
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setUser({
+                    username: data.username,
+                    email: data.email,
+                    profession: data.profession,
+                    phone: data.phone || '',
+                    age: data.age || '',
+                    maritalStatus: data.maritalStatus || ''
                 });
-                if (response.ok) {
-                    const data = await response.json();
-                    setUser({
-                        name: data.username,
-                        email: data.email,
-                        occupation: data.profession,
-                        phone: data.phone || '', // Set phone from data
-                        age: data.age || '', // Set age from data
-                        maritalStatus: data.maritalStatus || '' // Set marital status from data
-                    });
-                } else {
-                    console.error('Failed to fetch user profile');
-                }
-            } catch (error) {
-                console.error('Error fetching user profile:', error);
+            } else {
+                console.error('Failed to fetch user profile');
             }
-        };
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserProfile();
 
         const fetchLiabilities = async () => {
             try {
                 const response = await fetch('http://localhost:5000/api/liabilities', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -77,7 +79,7 @@ function Profile() {
             try {
                 const response = await fetch('http://localhost:5000/api/assets', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -90,7 +92,6 @@ function Profile() {
             }
         };
 
-        fetchUserProfile();
         fetchLiabilities();
         fetchAssets();
     }, []);
@@ -100,14 +101,77 @@ function Profile() {
         setIsModalOpen(true);
     };
 
+    const [editUserErrors, setEditUserErrors] = useState({
+        username: "",
+        email: "",
+        profession: "",
+        phone: "",
+        age: "",
+        maritalStatus: ""
+    });
+
+    const validateEditUserFields = () => {
+        let isValid = true;
+        const errors = {};
+
+        if (!String(editUser.username).trim()) {
+            errors.username = "Name is required.";
+            isValid = false;
+        }
+
+        if (!String(editUser.email).trim()) {
+            errors.email = "Email is required.";
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(editUser.email)) {
+            errors.email = "Invalid email format.";
+            isValid = false;
+        }
+
+        if (!String(editUser.profession).trim()) {
+            errors.profession = "Profession is required.";
+            isValid = false;
+        }
+
+        if (!String(editUser.phone).trim()) {
+            errors.phone = "Phone number is required.";
+            isValid = false;
+        } else if (!/^\d{10}$/.test(editUser.phone)) {
+            errors.phone = "Phone number must be 10 digits.";
+            isValid = false;
+        }
+
+        if (!String(editUser.age).trim()) {
+            errors.age = "Age is required.";
+            isValid = false;
+        } else if (isNaN(editUser.age) || Number(editUser.age) <= 0) {
+            errors.age = "Age must be a positive number.";
+            isValid = false;
+        }
+
+        if (!String(editUser.maritalStatus).trim()) {
+            errors.maritalStatus = "Marital status is required.";
+            isValid = false;
+        } else if (!["Single", "Married", "Divorced"].includes(editUser.maritalStatus)) {
+            errors.maritalStatus = "Marital status must be 'Single', 'Married', or 'Divorced'.";
+            isValid = false;
+        }
+
+        setEditUserErrors(errors);
+        return isValid;
+    };
+
     const handleSaveClick = async () => {
+        if (!validateEditUserFields()) {
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:5000/api/auth/profile/update', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify(editUser),
             });
 
@@ -127,15 +191,48 @@ function Profile() {
         setIsLiabilitiesModalOpen(true);
     };
 
+    const [newLiabilityErrors, setNewLiabilityErrors] = useState({});
+
+    const validateLiabilityFields = () => {
+        const errors = {};
+        let isValid = true;
+
+        if (!newLiability.name.trim()) {
+            errors.name = "Liability name is required.";
+            isValid = false;
+        }
+
+        if (!newLiability.amount || isNaN(newLiability.amount) || Number(newLiability.amount) <= 0) {
+            errors.amount = "Amount must be a positive number.";
+            isValid = false;
+        }
+
+        if (!newLiability.description.trim()) {
+            errors.description = "Description is required.";
+            isValid = false;
+        }
+
+        if (!newLiability.dueDate) {
+            errors.dueDate = "Due date is required.";
+            isValid = false;
+        }
+
+        setNewLiabilityErrors(errors);
+        return isValid;
+    };
+
     const handleLiabilitySaveClick = async () => {
+        if (!validateLiabilityFields()) {
+            return;
+        }
+
         try {
-            console.log('Sending liability data:', newLiability); // Log the data being sent
             const response = await fetch('http://localhost:5000/api/liabilities/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify(newLiability),
             });
 
@@ -146,7 +243,7 @@ function Profile() {
                 setIsLiabilitiesModalOpen(false);
             } else {
                 const errorData = await response.json();
-                console.error('Failed to add liability:', errorData); // Log the error response
+                console.error('Failed to add liability:', errorData);
             }
         } catch (error) {
             console.error('Error adding liability:', error);
@@ -157,14 +254,43 @@ function Profile() {
         setIsAssetsModalOpen(true);
     };
 
+    const [newAssetErrors, setNewAssetErrors] = useState({});
+
+    const validateAssetFields = () => {
+        const errors = {};
+        let isValid = true;
+
+        if (!newAsset.name.trim()) {
+            errors.name = "Asset name is required.";
+            isValid = false;
+        }
+
+        if (!newAsset.amount || isNaN(newAsset.amount) || Number(newAsset.amount) <= 0) {
+            errors.amount = "Amount must be a positive number.";
+            isValid = false;
+        }
+
+        if (!newAsset.description.trim()) {
+            errors.description = "Description is required.";
+            isValid = false;
+        }
+
+        setNewAssetErrors(errors);
+        return isValid;
+    };
+
     const handleAssetSaveClick = async () => {
+        if (!validateAssetFields()) {
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:5000/api/assets/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify(newAsset),
             });
 
@@ -181,14 +307,39 @@ function Profile() {
         }
     };
 
-    const handleDeleteLiability = (index) => {
-        const updatedLiabilities = liabilities.filter((_, i) => i !== index);
-        setLiabilities(updatedLiabilities);
+    const handleDeleteLiability = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/liabilities/delete/${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                setLiabilities(liabilities.filter((liability) => liability._id !== id));
+            } else {
+                console.error('Failed to delete liability');
+            }
+        } catch (error) {
+            console.error('Error deleting liability:', error);
+        }
     };
 
-    const handleDeleteAsset = (index) => {
-        const updatedAssets = assets.filter((_, i) => i !== index);
-        setAssets(updatedAssets);
+    const handleDeleteAsset = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/assets/delete/${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                // Remove the deleted asset from the state
+                setAssets(assets.filter((asset) => asset._id !== id));
+            } else {
+                console.error('Failed to delete asset');
+            }
+        } catch (error) {
+            console.error('Error deleting asset:', error);
+        }
     };
 
     return (
@@ -211,9 +362,9 @@ function Profile() {
                                             Edit
                                         </button>
                                     </div>
-                                    <p className="text-dark">Name: {user.name}</p>
+                                    <p className="text-dark">Name: {user.username}</p>
                                     <p className="text-dark">Email: {user.email}</p>
-                                    <p className="text-dark">Occupation: {user.occupation}</p>
+                                    <p className="text-dark">Occupation: {user.profession}</p>
                                     <p className="text-dark">Phone: {user.phone}</p>
                                     <p className="text-dark">Age: {user.age}</p>
                                     <p className="text-dark">Marital Status: {user.maritalStatus}</p>
@@ -228,18 +379,19 @@ function Profile() {
                                 </button>
                             </div>
                             <div className="mt-2 space-y-2">
-                                {liabilities.map((liability, index) => (
-                                    <div key={index} className="p-2">
+                                {liabilities.map((liability) => (
+                                    <div key={liability._id} className="p-2">
                                         <div className="flex justify-between items-center">
                                             <div>
                                                 <p className="font-bold text-xl text-[#1D3557]">{liability.name}</p>
                                                 <p>worth Rs. {liability.amount}</p>
                                             </div>
                                             <div className="flex items-center space-x-2">
-                                                <p>Due Date
-                                                    <br />
-                                                    {new Date(liability.dueDate).toISOString().split('T')[0]}</p>
-                                                <button onClick={() => handleDeleteLiability(index)} className="ml-2 text-red-500">
+                                                <p>Due Date<br />{new Date(liability.dueDate).toISOString().split('T')[0]}</p>
+                                                <button
+                                                    onClick={() => handleDeleteLiability(liability._id)}
+                                                    className="ml-2 text-red-500"
+                                                >
                                                     <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
                                                 </button>
                                             </div>
@@ -256,14 +408,17 @@ function Profile() {
                                 </button>
                             </div>
                             <div className="mt-2 space-y-2">
-                                {assets.map((asset, index) => (
-                                    <div key={index} className="p-2">
+                                {assets.map((asset) => (
+                                    <div key={asset._id} className="p-2">
                                         <div className="flex justify-between items-center">
                                             <div>
                                                 <p className="font-bold text-xl text-[#102647]">{asset.name}</p>
-                                                <p className='text-dark'>worth Rs. {asset.amount}</p>
+                                                <p className="text-dark">worth Rs. {asset.amount}</p>
                                             </div>
-                                            <button onClick={() => handleDeleteAsset(index)} className="text-red-800">
+                                            <button
+                                                onClick={() => handleDeleteAsset(asset._id)}
+                                                className="text-red-800"
+                                            >
                                                 <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
                                             </button>
                                         </div>
@@ -306,62 +461,68 @@ function Profile() {
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Name</label>
                             <input
-                                placeholder='eg. John Doe'
+                                placeholder="eg. John Doe"
                                 type="text"
-                                value={editUser.name}
-                                onChange={(e) => setEditUser({ ...editUser, name: e.target.value })}
+                                value={editUser.username}
+                                onChange={(e) => setEditUser({ ...editUser, username: e.target.value })}
                                 className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                             />
+                            {editUserErrors.username && <p className="text-red-500 text-sm mt-1">{editUserErrors.username}</p>}
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Email</label>
                             <input
                                 type="email"
-                                placeholder='eg. abc@gmail.com'
+                                placeholder="eg. abc@gmail.com"
                                 value={editUser.email}
                                 onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
                                 className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                             />
+                            {editUserErrors.email && <p className="text-red-500 text-sm mt-1">{editUserErrors.email}</p>}
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Occupation</label>
                             <input
                                 type="text"
-                                placeholder='eg. Doctor/Engineer'
-                                value={editUser.occupation}
-                                onChange={(e) => setEditUser({ ...editUser, occupation: e.target.value })}
+                                placeholder="eg. Doctor/Engineer"
+                                value={editUser.profession}
+                                onChange={(e) => setEditUser({ ...editUser, profession: e.target.value })}
                                 className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                             />
+                            {editUserErrors.profession && <p className="text-red-500 text-sm mt-1">{editUserErrors.profession}</p>}
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Phone</label>
                             <input
                                 type="text"
-                                placeholder='eg. 123-456-7890'
+                                placeholder="eg. 1234567890"
                                 value={editUser.phone}
                                 onChange={(e) => setEditUser({ ...editUser, phone: e.target.value })}
                                 className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                             />
+                            {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>}
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Age</label>
                             <input
                                 type="text"
-                                placeholder='eg. 25'
+                                placeholder="eg. 25"
                                 value={editUser.age}
                                 onChange={(e) => setEditUser({ ...editUser, age: e.target.value })}
                                 className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                             />
+                            {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>}
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Marital Status</label>
                             <input
                                 type="text"
-                                placeholder='eg. Single/Married/Divorced'
+                                placeholder="eg. Single/Married/Divorced"
                                 value={editUser.maritalStatus}
                                 onChange={(e) => setEditUser({ ...editUser, maritalStatus: e.target.value })}
                                 className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                             />
+                            {editUserErrors.maritalStatus && <p className="text-red-500 text-sm mt-1">{editUserErrors.maritalStatus}</p>}
                         </div>
                         <div className="flex justify-center space-x-2">
                             <button
@@ -393,6 +554,7 @@ function Profile() {
                             onChange={(e) => setNewLiability({ ...newLiability, name: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newLiabilityErrors.name && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.name}</p>}
                     </div>
                     <div>
                         <input
@@ -402,6 +564,7 @@ function Profile() {
                             onChange={(e) => setNewLiability({ ...newLiability, amount: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newLiabilityErrors.amount && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.amount}</p>}
                     </div>
                     <div>
                         <textarea
@@ -410,6 +573,7 @@ function Profile() {
                             onChange={(e) => setNewLiability({ ...newLiability, description: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newLiabilityErrors.description && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.description}</p>}
                     </div>
                     <div>
                         <input
@@ -419,6 +583,7 @@ function Profile() {
                             onChange={(e) => setNewLiability({ ...newLiability, dueDate: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newLiabilityErrors.dueDate && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.dueDate}</p>}
                     </div>
                     <div className="flex justify-center space-x-2">
                         <button
@@ -449,6 +614,7 @@ function Profile() {
                             onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newAssetErrors.name && <p className="text-red-500 text-sm mt-1">{newAssetErrors.name}</p>}
                     </div>
                     <div>
                         <input
@@ -458,6 +624,7 @@ function Profile() {
                             onChange={(e) => setNewAsset({ ...newAsset, amount: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newAssetErrors.amount && <p className="text-red-500 text-sm mt-1">{newAssetErrors.amount}</p>}
                     </div>
                     <div>
                         <textarea
@@ -466,6 +633,7 @@ function Profile() {
                             onChange={(e) => setNewAsset({ ...newAsset, description: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {newAssetErrors.description && <p className="text-red-500 text-sm mt-1">{newAssetErrors.description}</p>}
                     </div>
                     <div className="flex justify-center space-x-2">
                         <button
