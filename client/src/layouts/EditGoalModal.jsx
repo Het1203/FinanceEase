@@ -69,7 +69,7 @@ function EditGoalModal({ goal, onSave, onClose }) {
                             placeholder="Goal Name"
                             value={goalName}
                             onChange={(e) => setGoalName(e.target.value)}
-                            className={`w-full px-3 py-2 rounded bg-[#D8CFD0] text-dark placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 ${errors.goalName ? "border border-red-400" : ""
+                            className={`w-full px-3 py-2 rounded bg-[#D8CFD0] text-dark placeholder-[#697184] focus:outline-none focus:ring-2 focus:ring-white/50 ${errors.goalName ? "border border-red-400" : ""
                                 }`}
                         />
                         {errors.goalName && <p className="text-red-300 text-xs mt-1">{errors.goalName}</p>}

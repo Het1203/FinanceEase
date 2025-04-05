@@ -8,7 +8,6 @@ function Goals() {
     const [showAddModal, setShowAddModal] = useState(false);
     const [editingGoal, setEditingGoal] = useState(null);
 
-    // Fetch goals from the backend
     useEffect(() => {
         const fetchGoals = async () => {
             try {
@@ -30,7 +29,6 @@ function Goals() {
         fetchGoals();
     }, []);
 
-    // Add a new goal
     const addGoal = async (goal) => {
         try {
             const response = await fetch("http://localhost:5000/api/goals/create", {
@@ -54,7 +52,6 @@ function Goals() {
         }
     };
 
-    // Update saved amount
     const updateSavedAmount = async (id, amount) => {
         try {
             const response = await fetch(`http://localhost:5000/api/goals/update/${id}`, {
@@ -77,7 +74,6 @@ function Goals() {
         }
     };
 
-    // Edit a goal
     const editGoal = async (updatedGoal) => {
         try {
             const response = await fetch(`http://localhost:5000/api/goals/update/${updatedGoal._id}`, {
@@ -101,7 +97,6 @@ function Goals() {
         }
     };
 
-    // Delete a goal
     const deleteGoal = async (id) => {
         try {
             const response = await fetch(`http://localhost:5000/api/goals/delete/${id}`, {
