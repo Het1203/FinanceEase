@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Modal from '../layouts/Modal';
 
 function Profile() {
     const [user, setUser] = useState({
@@ -179,6 +178,7 @@ function Profile() {
                 const updatedUser = await response.json();
                 setUser(updatedUser);
                 setIsModalOpen(false);
+                setEditUser(null);
             } else {
                 console.error('Failed to update user profile');
             }
@@ -455,202 +455,217 @@ function Profile() {
 
             {/* Edit Profile Modal */}
             {editUser && (
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Edit Profile</h2>
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Name</label>
-                            <input
-                                placeholder="eg. John Doe"
-                                type="text"
-                                value={editUser.username}
-                                onChange={(e) => setEditUser({ ...editUser, username: e.target.value })}
-                                className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                            />
-                            {editUserErrors.username && <p className="text-red-500 text-sm mt-1">{editUserErrors.username}</p>}
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Email</label>
-                            <input
-                                type="email"
-                                placeholder="eg. abc@gmail.com"
-                                value={editUser.email}
-                                onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
-                                className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                            />
-                            {editUserErrors.email && <p className="text-red-500 text-sm mt-1">{editUserErrors.email}</p>}
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Occupation</label>
-                            <input
-                                type="text"
-                                placeholder="eg. Doctor/Engineer"
-                                value={editUser.profession}
-                                onChange={(e) => setEditUser({ ...editUser, profession: e.target.value })}
-                                className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                            />
-                            {editUserErrors.profession && <p className="text-red-500 text-sm mt-1">{editUserErrors.profession}</p>}
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Phone</label>
-                            <input
-                                type="text"
-                                placeholder="eg. 1234567890"
-                                value={editUser.phone}
-                                onChange={(e) => setEditUser({ ...editUser, phone: e.target.value })}
-                                className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                            />
-                            {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>}
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Age</label>
-                            <input
-                                type="text"
-                                placeholder="eg. 25"
-                                value={editUser.age}
-                                onChange={(e) => setEditUser({ ...editUser, age: e.target.value })}
-                                className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                            />
-                            {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>}
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Marital Status</label>
-                            <input
-                                type="text"
-                                placeholder="eg. Single/Married/Divorced"
-                                value={editUser.maritalStatus}
-                                onChange={(e) => setEditUser({ ...editUser, maritalStatus: e.target.value })}
-                                className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                            />
-                            {editUserErrors.maritalStatus && <p className="text-red-500 text-sm mt-1">{editUserErrors.maritalStatus}</p>}
-                        </div>
-                        <div className="flex justify-center space-x-2">
-                            <button
-                                className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
-                                onClick={() => setIsModalOpen(false)}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
-                                onClick={handleSaveClick}
-                            >
-                                Save
-                            </button>
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
+                        <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Edit Profile</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Name</label>
+                                <input
+                                    placeholder="eg. John Doe"
+                                    type="text"
+                                    value={editUser.username}
+                                    onChange={(e) => setEditUser({ ...editUser, username: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {editUserErrors.username && <p className="text-red-500 text-sm mt-1">{editUserErrors.username}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Email</label>
+                                <input
+                                    type="email"
+                                    placeholder="eg. abc@gmail.com"
+                                    value={editUser.email}
+                                    onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {editUserErrors.email && <p className="text-red-500 text-sm mt-1">{editUserErrors.email}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Occupation</label>
+                                <input
+                                    type="text"
+                                    placeholder="eg. Doctor/Engineer"
+                                    value={editUser.profession}
+                                    onChange={(e) => setEditUser({ ...editUser, profession: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {editUserErrors.profession && <p className="text-red-500 text-sm mt-1">{editUserErrors.profession}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                                <input
+                                    type="text"
+                                    placeholder="eg. 1234567890"
+                                    value={editUser.phone}
+                                    onChange={(e) => setEditUser({ ...editUser, phone: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Age</label>
+                                <input
+                                    type="text"
+                                    placeholder="eg. 25"
+                                    value={editUser.age}
+                                    onChange={(e) => setEditUser({ ...editUser, age: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Marital Status</label>
+                                <input
+                                    type="text"
+                                    placeholder="eg. Single/Married/Divorced"
+                                    value={editUser.maritalStatus}
+                                    onChange={(e) => setEditUser({ ...editUser, maritalStatus: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {editUserErrors.maritalStatus && <p className="text-red-500 text-sm mt-1">{editUserErrors.maritalStatus}</p>}
+                            </div>
+                            <div className="flex justify-center space-x-2">
+                                <button
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    onClick={() => {
+                                        setIsModalOpen(false);
+                                        setEditUser(null);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    onClick={handleSaveClick}
+                                >
+                                    Save
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </Modal>
+                </div>
             )}
 
             {/* Add Liability Modal */}
-            <Modal isOpen={isLiabilitiesModalOpen} onClose={() => setIsLiabilitiesModalOpen(false)}>
-                <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Liability</h2>
-                <div className="space-y-4">
-                    <div>
-                        <input
-                            type="text"
-                            placeholder='Name of Liability'
-                            value={newLiability.name}
-                            onChange={(e) => setNewLiability({ ...newLiability, name: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newLiabilityErrors.name && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.name}</p>}
-                    </div>
-                    <div>
-                        <input
-                            type="number"
-                            placeholder='Amount'
-                            value={newLiability.amount}
-                            onChange={(e) => setNewLiability({ ...newLiability, amount: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newLiabilityErrors.amount && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.amount}</p>}
-                    </div>
-                    <div>
-                        <textarea
-                            placeholder='Description'
-                            value={newLiability.description}
-                            onChange={(e) => setNewLiability({ ...newLiability, description: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newLiabilityErrors.description && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.description}</p>}
-                    </div>
-                    <div>
-                        <input
-                            type="date"
-                            placeholder='Due Date'
-                            value={newLiability.duedate}
-                            onChange={(e) => setNewLiability({ ...newLiability, dueDate: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newLiabilityErrors.dueDate && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.dueDate}</p>}
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                        <button
-                            className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
-                            onClick={() => setIsLiabilitiesModalOpen(false)}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
-                            onClick={handleLiabilitySaveClick}
-                        >
-                            Save
-                        </button>
+            {isLiabilitiesModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center max-w-3xl w-full">
+                        <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Liability</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder='Name of Liability'
+                                    value={newLiability.name}
+                                    onChange={(e) => setNewLiability({ ...newLiability, name: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newLiabilityErrors.name && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.name}</p>}
+                            </div>
+                            <div>
+                                <input
+                                    type="number"
+                                    placeholder='Amount'
+                                    value={newLiability.amount}
+                                    onChange={(e) => setNewLiability({ ...newLiability, amount: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newLiabilityErrors.amount && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.amount}</p>}
+                            </div>
+                            <div>
+                                <textarea
+                                    placeholder='Description'
+                                    value={newLiability.description}
+                                    onChange={(e) => setNewLiability({ ...newLiability, description: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newLiabilityErrors.description && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.description}</p>}
+                            </div>
+                            <div>
+                                <input
+                                    type="date"
+                                    placeholder='Due Date'
+                                    value={newLiability.duedate}
+                                    onChange={(e) => setNewLiability({ ...newLiability, dueDate: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newLiabilityErrors.dueDate && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.dueDate}</p>}
+                            </div>
+                            <div className="flex justify-center space-x-2">
+                                <button
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    onClick={() => {
+                                        setIsLiabilitiesModalOpen(false);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    onClick={handleLiabilitySaveClick}
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </Modal>
+            )}
 
             {/* Add Asset Modal */}
-            <Modal isOpen={isAssetsModalOpen} onClose={() => setIsAssetsModalOpen(false)}>
-                <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Asset</h2>
-                <div className="space-y-4">
-                    <div>
-                        <input
-                            type="text"
-                            placeholder='Name of Asset'
-                            value={newAsset.name}
-                            onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newAssetErrors.name && <p className="text-red-500 text-sm mt-1">{newAssetErrors.name}</p>}
-                    </div>
-                    <div>
-                        <input
-                            type="number"
-                            placeholder='Amount'
-                            value={newAsset.amount}
-                            onChange={(e) => setNewAsset({ ...newAsset, amount: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newAssetErrors.amount && <p className="text-red-500 text-sm mt-1">{newAssetErrors.amount}</p>}
-                    </div>
-                    <div>
-                        <textarea
-                            placeholder='Description'
-                            value={newAsset.description}
-                            onChange={(e) => setNewAsset({ ...newAsset, description: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {newAssetErrors.description && <p className="text-red-500 text-sm mt-1">{newAssetErrors.description}</p>}
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                        <button
-                            className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
-                            onClick={() => setIsAssetsModalOpen(false)}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
-                            onClick={handleAssetSaveClick}
-                        >
-                            Save
-                        </button>
+            {isAssetsModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center max-w-3xl w-full">
+                        <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Asset</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder='Name of Asset'
+                                    value={newAsset.name}
+                                    onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newAssetErrors.name && <p className="text-red-500 text-sm mt-1">{newAssetErrors.name}</p>}
+                            </div>
+                            <div>
+                                <input
+                                    type="number"
+                                    placeholder='Amount'
+                                    value={newAsset.amount}
+                                    onChange={(e) => setNewAsset({ ...newAsset, amount: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newAssetErrors.amount && <p className="text-red-500 text-sm mt-1">{newAssetErrors.amount}</p>}
+                            </div>
+                            <div>
+                                <textarea
+                                    placeholder='Description'
+                                    value={newAsset.description}
+                                    onChange={(e) => setNewAsset({ ...newAsset, description: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {newAssetErrors.description && <p className="text-red-500 text-sm mt-1">{newAssetErrors.description}</p>}
+                            </div>
+                            <div className="flex justify-center space-x-2">
+                                <button
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    onClick={() => setIsAssetsModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    onClick={handleAssetSaveClick}
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </Modal>
+            )}
         </div>
     );
 }
