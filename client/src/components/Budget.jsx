@@ -13,6 +13,8 @@ function Budget() {
     const [currentMonthBudget, setCurrentMonthBudget] = useState([]);
     const [currentMonthExpenses, setCurrentMonthExpenses] = useState([]);
     const [previousMonthBudgets, setPreviousMonthBudgets] = useState([]);
+    const [budgetErrors, setBudgetErrors] = useState({});
+    const [expenseErrors, setExpenseErrors] = useState({});
 
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6633', '#FF33FF', '#33FF33', '#33CCFF'];
 
@@ -62,7 +64,26 @@ function Budget() {
         setBudgetItems(newBudgetItems);
     };
 
+    const validateBudgetItems = () => {
+        const errors = budgetItems.map(item => {
+            const error = {};
+            if (!item.category.trim()) {
+                error.category = 'Category is required';
+            }
+            if (!item.amount || isNaN(item.amount) || Number(item.amount) == 0) {
+                error.amount = 'Valid amount is required';
+            }
+            return error;
+        });
+        setBudgetErrors(errors);
+        return errors.every(error => Object.keys(error).length === 0);
+    };
+
     const handleSaveBudget = async () => {
+        if (!validateBudgetItems()) {
+            return;
+        }
+
         const response = await fetch('http://localhost:5000/api/budget/create', {
             method: 'POST',
             headers: {
@@ -94,7 +115,26 @@ function Budget() {
         setExpenseItems(newExpenseItems);
     };
 
+    const validateExpenseItems = () => {
+        const errors = expenseItems.map((item) => {
+            const error = {};
+            if (!item.category.trim()) {
+                error.category = "Category is required.";
+            }
+            if (!item.amount || isNaN(item.amount) || Number(item.amount) == 0) {
+                error.amount = "Amount must be a positive number.";
+            }
+            return error;
+        });
+
+        setExpenseErrors(errors);
+        return errors.every((error) => Object.keys(error).length === 0);
+    };
+
     const handleSaveExpenses = async () => {
+        if (!validateExpenseItems()) {
+            return;
+        }
         const response = await fetch('http://localhost:5000/api/expenses/create', {
             method: 'POST',
             headers: {
@@ -322,20 +362,26 @@ function Budget() {
                 <div className="space-y-4">
                     {budgetItems.map((item, index) => (
                         <div key={index} className="flex space-x-4">
-                            <input
-                                type="text"
-                                placeholder='Add Category'
-                                value={item.category}
-                                onChange={(e) => handleBudgetItemChange(index, 'category', e.target.value)}
-                                className="w-1/2 bg-gray-200 rounded-md p-2 focus:outline-none"
-                            />
-                            <input
-                                type="number"
-                                placeholder='Amount'
-                                value={item.amount}
-                                onChange={(e) => handleBudgetItemChange(index, 'amount', e.target.value)}
-                                className="w-1/2 bg-gray-200 rounded-md p-2 focus:outline-none"
-                            />
+                            <div className="w-1/2">
+                                <input
+                                    type="text"
+                                    placeholder="Add Category"
+                                    value={item.category}
+                                    onChange={(e) => handleBudgetItemChange(index, 'category', e.target.value)}
+                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                />
+                                {budgetErrors[index]?.category && <p className="text-red-500 text-sm">{budgetErrors[index].category}</p>}
+                            </div>
+                            <div className="w-1/2">
+                                <input
+                                    type="number"
+                                    placeholder="Amount"
+                                    value={item.amount}
+                                    onChange={(e) => handleBudgetItemChange(index, 'amount', e.target.value)}
+                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                />
+                                {budgetErrors[index]?.amount && <p className="text-red-500 text-sm">{budgetErrors[index].amount}</p>}
+                            </div>
                             {index > 0 && (
                                 <button onClick={() => handleDeleteBudgetItem(index)} className="text-red-500">
                                     <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
@@ -365,20 +411,26 @@ function Budget() {
                 <div className="space-y-4">
                     {expenseItems.map((item, index) => (
                         <div key={index} className="flex space-x-4">
-                            <input
-                                type="text"
-                                placeholder='Add Category'
-                                value={item.category}
-                                onChange={(e) => handleExpenseItemChange(index, 'category', e.target.value)}
-                                className="w-1/2 bg-gray-200 rounded-md p-2 focus:outline-none"
-                            />
-                            <input
-                                type="number"
-                                placeholder='Amount'
-                                value={item.amount}
-                                onChange={(e) => handleExpenseItemChange(index, 'amount', e.target.value)}
-                                className="w-1/2 bg-gray-200 rounded-md p-2 focus:outline-none"
-                            />
+                            <div className="w-1/2">
+                                <input
+                                    type="text"
+                                    placeholder="Add Category"
+                                    value={item.category}
+                                    onChange={(e) => handleExpenseItemChange(index, 'category', e.target.value)}
+                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                />
+                                {expenseErrors[index]?.category && <p className="text-red-500 text-sm">{expenseErrors[index].category}</p>}
+                            </div>
+                            <div className="w-1/2">
+                                <input
+                                    type="number"
+                                    placeholder="Amount"
+                                    value={item.amount}
+                                    onChange={(e) => handleExpenseItemChange(index, 'amount', e.target.value)}
+                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                />
+                                {expenseErrors[index]?.amount && <p className="text-red-500 text-sm">{expenseErrors[index].amount}</p>}
+                            </div>
                             {index > 0 && (
                                 <button onClick={() => handleDeleteExpenseItem(index)} className="text-red-500">
                                     <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
