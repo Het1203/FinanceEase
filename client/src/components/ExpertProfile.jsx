@@ -19,17 +19,17 @@ function ExpertProfile() {
             try {
                 const response = await fetch('http://localhost:5000/api/expert/me', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
                     setExpert({
                         name: data.name,
                         email: data.email,
-                        phoneNumber: data.phoneNumber || '', // Set phone from data
-                        age: data.age || '', // Set age from data
+                        phoneNumber: data.phoneNumber || '',
+                        age: data.age || '',
                         occupation: data.occupation,
-                        expertise: data.expertise || '' // Set expertise from data
+                        expertise: data.expertise || ''
                     });
                 } else {
                     console.error('Failed to fetch expert profile');
@@ -54,7 +54,7 @@ function ExpertProfile() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify(editExpert),
             });
 

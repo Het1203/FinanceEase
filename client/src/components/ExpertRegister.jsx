@@ -34,7 +34,6 @@ function ExpertRegister() {
         });
 
         if (response.ok) {
-            // Handle successful signup (e.g., navigate to login page)
             navigate("/login");
         } else {
             const data = await response.json();
