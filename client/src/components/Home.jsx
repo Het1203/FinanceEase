@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Modal from '../layouts/Modal';
 import { Link } from 'react-router-dom';
 
 function Home() {
@@ -308,7 +307,7 @@ function Home() {
                                     <img src="/person.png" alt="Author" className="w-full h-full object-cover" />
                                 </div>
                                 <div>
-                                    <h3 className="text-[#4A4A4A] text-xl font-bold">{blog.title}</h3>
+                                    <h3 className="text-[#102647] text-xl font-bold">{blog.title}</h3>
                                     <p className="text-xl font-bold text-[#4A4A4A]">{blog.author.name} • {blog.date}</p>
                                 </div>
                             </div>
@@ -319,65 +318,71 @@ function Home() {
 
             {/* Blog Details Modal */}
             {selectedBlog && (
-                <Modal isOpen={!!selectedBlog} onClose={() => setSelectedBlog(null)}>
-                    <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">{selectedBlog.title}</h2>
-                    <div className="space-y-4">
-                        <p className="text-xl text-blue-300 font-bold mb-10">
-                            {selectedBlog.author.name} • {selectedBlog.date}
-                        </p>
-                        <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
-                        <div className="flex justify-center space-x-2 mt-20">
-                            <button
-                                className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md"
-                                onClick={() => setSelectedBlog(null)}
-                            >
-                                Close
-                            </button>
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-6xl h-[80vh] overflow-y-auto">
+                        <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">{selectedBlog.title}</h2>
+                        <div className="space-y-4">
+                            <p className="text-xl text-dark font-medium mb-10">
+                                {selectedBlog.author.name} • {selectedBlog.date}
+                            </p>
+                            <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
+                            <div className="flex justify-center space-x-2 mt-20">
+                                <button
+                                    className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md"
+                                    onClick={() => setSelectedBlog(null)}
+                                >
+                                    Close
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </Modal>
+                </div>
             )}
 
             {/* Add Income Source Modal */}
-            <Modal isOpen={isIncomeModalOpen} onClose={() => setIsIncomeModalOpen(false)}>
-                <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Add Income Source</h2>
-                <div className="space-y-4">
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Name of Income Source"
-                            value={newIncomeSource.name}
-                            onChange={(e) => setNewIncomeSource({ ...newIncomeSource, name: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
-                    </div>
-                    <div>
-                        <input
-                            type="number"
-                            placeholder="Amount (Yearly)"
-                            value={newIncomeSource.amount}
-                            onChange={(e) => setNewIncomeSource({ ...newIncomeSource, amount: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                        {amountError && <p className="text-red-500 text-sm mt-1">{amountError}</p>}
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                        <button
-                            className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
-                            onClick={() => setIsIncomeModalOpen(false)}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
-                            onClick={handleIncomeSaveClick}
-                        >
-                            Save
-                        </button>
+            {isIncomeModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center max-w-3xl w-full">
+                        <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Add Income Source</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Name of Income Source"
+                                    value={newIncomeSource.name}
+                                    onChange={(e) => setNewIncomeSource({ ...newIncomeSource, name: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
+                            </div>
+                            <div>
+                                <input
+                                    type="number"
+                                    placeholder="Amount (Yearly)"
+                                    value={newIncomeSource.amount}
+                                    onChange={(e) => setNewIncomeSource({ ...newIncomeSource, amount: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {amountError && <p className="text-red-500 text-sm mt-1">{amountError}</p>}
+                            </div>
+                            <div className="flex justify-center space-x-2">
+                                <button
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    onClick={() => setIsIncomeModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    onClick={handleIncomeSaveClick}
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </Modal>
+            )}
         </div>
     );
 }
