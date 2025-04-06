@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Modal from '../layouts/Modal'; // Assuming you have a Modal component
+import Modal from '../layouts/Modal';
 import { Link } from 'react-router-dom';
 
 function Home() {
@@ -17,7 +17,7 @@ function Home() {
         name: '',
         email: '',
         occupation: '',
-        image: '/person.png' // Default image
+        image: '/person.png'
     });
 
     useEffect(() => {
@@ -25,11 +25,10 @@ function Home() {
             try {
                 const response = await fetch('http://localhost:5000/api/income/getincome', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    // Sort income sources by amount in descending order
                     data.sort((a, b) => b.amount - a.amount);
                     setIncomeSources(data);
                 } else {
@@ -44,7 +43,7 @@ function Home() {
             try {
                 const response = await fetch('http://localhost:5000/api/liabilities', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -61,7 +60,7 @@ function Home() {
             try {
                 const response = await fetch('http://localhost:5000/api/assets', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -78,7 +77,7 @@ function Home() {
             try {
                 const response = await fetch('http://localhost:5000/api/auth/me', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -86,7 +85,7 @@ function Home() {
                         name: data.username,
                         email: data.email,
                         occupation: data.profession,
-                        image: data.image || '/user-avatar.jpg' // Use default image if not provided
+                        image: data.image || '/user-avatar.jpg'
                     });
                 } else {
                     console.error('Failed to fetch user profile');
@@ -100,11 +99,11 @@ function Home() {
             try {
                 const response = await fetch('http://localhost:5000/api/blogs/allblogs', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setBlogs(data.slice(0, 5)); // Display only the first 5 blogs
+                    setBlogs(data.slice(0, 5));
                 } else {
                     console.error('Failed to fetch blogs');
                 }
@@ -124,15 +123,49 @@ function Home() {
         setIsIncomeModalOpen(true);
     };
 
+    const [nameError, setNameError] = useState('');
+    const [amountError, setAmountError] = useState('');
+
+    const validateIncomeSource = () => {
+        let isValid = true;
+
+        if (!newIncomeSource.name.trim()) {
+            setNameError('Income source name is required');
+            isValid = false;
+        } else {
+            setNameError('');
+        }
+
+        if (!newIncomeSource.amount) {
+            setAmountError('Income source amount is required');
+            isValid = false;
+        } else if (isNaN(Number(newIncomeSource.amount)) || Number(newIncomeSource.amount) <= 0) {
+            setAmountError('Income source amount must be a positive number');
+            isValid = false;
+        } else {
+            setAmountError('');
+        }
+
+        return isValid;
+    };
+
     const handleIncomeSaveClick = async () => {
+        if (!validateIncomeSource()) {
+            return;
+        }
+        const incomeSourceExists = incomeSources.some(source => source.name.toLowerCase() === newIncomeSource.name.toLowerCase());
+        if (incomeSourceExists) {
+            setNameError('Income source already exists');
+            return;
+        }
+        setNameError('');
         try {
-            console.log('Sending income source data:', newIncomeSource); // Log the data being sent
             const response = await fetch('http://localhost:5000/api/income/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify(newIncomeSource),
             });
 
@@ -143,7 +176,7 @@ function Home() {
                 setIsIncomeModalOpen(false);
             } else {
                 const errorData = await response.json();
-                console.error('Failed to add income source:', errorData); // Log the error response
+                console.error('Failed to add income source:', errorData);
             }
         } catch (error) {
             console.error('Error adding income source:', error);
@@ -154,7 +187,7 @@ function Home() {
         try {
             const response = await fetch(`http://localhost:5000/api/income/deleteincome/${id}`, {
                 method: 'DELETE',
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
             });
 
             if (response.ok) {
@@ -219,39 +252,41 @@ function Home() {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Liabilities */}
-                <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm">
-                    <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Liabilities</h2>
-                    <div className="space-y-4">
-                        {liabilities.map((liability, index) => (
-                            <div key={index} className="border-b pb-2">
-                                <div className="flex justify-between">
-                                    <span className="text-[#4A4A4A] text-xl font-bold">{liability.name}</span>
-                                    <span className="text-[#4A4A4A] text-xl font-bold">Due Date</span>
+            <Link to="/dashboard/profile">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    {/* Liabilities */}
+                    <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm">
+                        <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Liabilities</h2>
+                        <div className="space-y-4">
+                            {liabilities.map((liability, index) => (
+                                <div key={index} className="border-b pb-2">
+                                    <div className="flex justify-between">
+                                        <span className="text-[#4A4A4A] text-xl font-bold">{liability.name}</span>
+                                        <span className="text-[#4A4A4A] text-xl font-bold">Due Date</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-[#4A4A4A] text-xl font-bold">worth Rs. {liability.amount}</span>
+                                        <span className="text-[#4A4A4A] text-xl font-bold">{new Date(liability.dueDate).toISOString().split('T')[0]}</span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span className="text-[#4A4A4A] text-xl font-bold">worth Rs. {liability.amount}</span>
-                                    <span className="text-[#4A4A4A] text-xl font-bold">{new Date(liability.dueDate).toISOString().split('T')[0]}</span>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
 
-                {/* Assets */}
-                <div className="bg-[#697184] p-6 rounded-md shadow-sm">
-                    <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Assets</h2>
-                    <div className="space-y-3">
-                        {assets.map((asset, index) => (
-                            <div key={index} className="flex justify-between items-center bg-[#D8CFD0] p-3 rounded-md">
-                                <span className="text-[#4A4A4A] text-xl font-bold">{asset.name}</span>
-                                <span className="text-[#4A4A4A] text-xl font-bold">worth Rs. {asset.amount}</span>
-                            </div>
-                        ))}
+                    {/* Assets */}
+                    <div className="bg-[#697184] p-6 rounded-md shadow-sm">
+                        <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Assets</h2>
+                        <div className="space-y-3">
+                            {assets.map((asset, index) => (
+                                <div key={index} className="flex justify-between items-center bg-[#D8CFD0] p-3 rounded-md">
+                                    <span className="text-[#4A4A4A] text-xl font-bold">{asset.name}</span>
+                                    <span className="text-[#4A4A4A] text-xl font-bold">worth Rs. {asset.amount}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Link>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -310,20 +345,22 @@ function Home() {
                     <div>
                         <input
                             type="text"
-                            placeholder='Name of Income Source'
+                            placeholder="Name of Income Source"
                             value={newIncomeSource.name}
                             onChange={(e) => setNewIncomeSource({ ...newIncomeSource, name: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
                     </div>
                     <div>
                         <input
                             type="number"
-                            placeholder='Amount (Yearly)'
+                            placeholder="Amount (Yearly)"
                             value={newIncomeSource.amount}
                             onChange={(e) => setNewIncomeSource({ ...newIncomeSource, amount: e.target.value })}
                             className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                         />
+                        {amountError && <p className="text-red-500 text-sm mt-1">{amountError}</p>}
                     </div>
                     <div className="flex justify-center space-x-2">
                         <button
