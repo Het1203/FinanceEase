@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Modal from '../layouts/Modal'; // Assuming you have a Modal component
+import Modal from '../layouts/Modal';
 
 function Blogs() {
     const [blogs, setBlogs] = useState([]);
@@ -10,7 +10,7 @@ function Blogs() {
             try {
                 const response = await fetch('http://localhost:5000/api/blogs/allblogs', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();

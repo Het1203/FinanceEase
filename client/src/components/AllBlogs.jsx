@@ -10,7 +10,7 @@ function AllBlogs() {
             try {
                 const response = await fetch('http://localhost:5000/api/blogs/allblogs', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
