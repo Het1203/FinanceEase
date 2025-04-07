@@ -357,102 +357,110 @@ function Budget() {
             </div>
 
             {/* Budget Modal */}
-            <Modal isOpen={isBudgetModalOpen} onClose={() => setIsBudgetModalOpen(false)}>
-                <h2 className="text-xl flex justify-center text-[#4A4A4A] font-bold mb-4">Create Budget</h2>
-                <div className="space-y-4">
-                    {budgetItems.map((item, index) => (
-                        <div key={index} className="flex space-x-4">
-                            <div className="w-1/2">
-                                <input
-                                    type="text"
-                                    placeholder="Add Category"
-                                    value={item.category}
-                                    onChange={(e) => handleBudgetItemChange(index, 'category', e.target.value)}
-                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
-                                />
-                                {budgetErrors[index]?.category && <p className="text-red-500 text-sm">{budgetErrors[index].category}</p>}
-                            </div>
-                            <div className="w-1/2">
-                                <input
-                                    type="number"
-                                    placeholder="Amount"
-                                    value={item.amount}
-                                    onChange={(e) => handleBudgetItemChange(index, 'amount', e.target.value)}
-                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
-                                />
-                                {budgetErrors[index]?.amount && <p className="text-red-500 text-sm">{budgetErrors[index].amount}</p>}
-                            </div>
-                            {index > 0 && (
-                                <button onClick={() => handleDeleteBudgetItem(index)} className="text-red-500">
-                                    <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
+            {isBudgetModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-4xl h-[60vh] overflow-y-auto">
+                        <h2 className="text-xl flex justify-center text-[#4A4A4A] font-bold mb-4">Create Budget</h2>
+                        <div className="space-y-4">
+                            {budgetItems.map((item, index) => (
+                                <div key={index} className="flex space-x-4">
+                                    <div className="w-1/2">
+                                        <input
+                                            type="text"
+                                            placeholder="Add Category"
+                                            value={item.category}
+                                            onChange={(e) => handleBudgetItemChange(index, 'category', e.target.value)}
+                                            className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                        />
+                                        {budgetErrors[index]?.category && <p className="text-red-500 text-sm">{budgetErrors[index].category}</p>}
+                                    </div>
+                                    <div className="w-1/2">
+                                        <input
+                                            type="number"
+                                            placeholder="Amount"
+                                            value={item.amount}
+                                            onChange={(e) => handleBudgetItemChange(index, 'amount', e.target.value)}
+                                            className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                        />
+                                        {budgetErrors[index]?.amount && <p className="text-red-500 text-sm">{budgetErrors[index].amount}</p>}
+                                    </div>
+                                    {index > 0 && (
+                                        <button onClick={() => handleDeleteBudgetItem(index)} className="text-red-500">
+                                            <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            <div className="flex justify-center">
+                                <button onClick={handleAddBudgetItem} className="bg-gray-200 text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">
+                                    Add More
                                 </button>
-                            )}
+                            </div>
+                            <div className="flex justify-center space-x-4">
+                                <button onClick={() => setIsBudgetModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md">
+                                    Cancel
+                                </button>
+                                <button onClick={handleSaveBudget} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md">
+                                    Save
+                                </button>
+                            </div>
                         </div>
-                    ))}
-                    <div className="flex justify-center">
-                        <button onClick={handleAddBudgetItem} className="bg-gray-200 text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">
-                            Add More
-                        </button>
-                    </div>
-                    <div className="flex justify-center space-x-4">
-                        <button onClick={() => setIsBudgetModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md">
-                            Cancel
-                        </button>
-                        <button onClick={handleSaveBudget} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md">
-                            Save
-                        </button>
                     </div>
                 </div>
-            </Modal>
+            )}
 
             {/* Expense Modal */}
-            <Modal isOpen={isExpenseModalOpen} onClose={() => setIsExpenseModalOpen(false)}>
-                <h2 className="text-xl flex justify-center text-[#4A4A4A] font-bold mb-4">Manage Expenses</h2>
-                <div className="space-y-4">
-                    {expenseItems.map((item, index) => (
-                        <div key={index} className="flex space-x-4">
-                            <div className="w-1/2">
-                                <input
-                                    type="text"
-                                    placeholder="Add Category"
-                                    value={item.category}
-                                    onChange={(e) => handleExpenseItemChange(index, 'category', e.target.value)}
-                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
-                                />
-                                {expenseErrors[index]?.category && <p className="text-red-500 text-sm">{expenseErrors[index].category}</p>}
-                            </div>
-                            <div className="w-1/2">
-                                <input
-                                    type="number"
-                                    placeholder="Amount"
-                                    value={item.amount}
-                                    onChange={(e) => handleExpenseItemChange(index, 'amount', e.target.value)}
-                                    className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
-                                />
-                                {expenseErrors[index]?.amount && <p className="text-red-500 text-sm">{expenseErrors[index].amount}</p>}
-                            </div>
-                            {index > 0 && (
-                                <button onClick={() => handleDeleteExpenseItem(index)} className="text-red-500">
-                                    <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
+            {isExpenseModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-4xl h-[60vh] overflow-y-auto">
+                        <h2 className="text-xl flex justify-center text-[#4A4A4A] font-bold mb-4">Manage Expenses</h2>
+                        <div className="space-y-4">
+                            {expenseItems.map((item, index) => (
+                                <div key={index} className="flex space-x-4">
+                                    <div className="w-1/2">
+                                        <input
+                                            type="text"
+                                            placeholder="Add Category"
+                                            value={item.category}
+                                            onChange={(e) => handleExpenseItemChange(index, 'category', e.target.value)}
+                                            className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                        />
+                                        {expenseErrors[index]?.category && <p className="text-red-500 text-sm">{expenseErrors[index].category}</p>}
+                                    </div>
+                                    <div className="w-1/2">
+                                        <input
+                                            type="number"
+                                            placeholder="Amount"
+                                            value={item.amount}
+                                            onChange={(e) => handleExpenseItemChange(index, 'amount', e.target.value)}
+                                            className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
+                                        />
+                                        {expenseErrors[index]?.amount && <p className="text-red-500 text-sm">{expenseErrors[index].amount}</p>}
+                                    </div>
+                                    {index > 0 && (
+                                        <button onClick={() => handleDeleteExpenseItem(index)} className="text-red-500">
+                                            <img src="/Trash.svg" alt="Delete" className="w-6 h-8" />
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            <div className="flex justify-center">
+                                <button onClick={handleAddExpenseItem} className="bg-gray-200 text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">
+                                    Add More
                                 </button>
-                            )}
+                            </div>
+                            <div className="flex justify-center space-x-4">
+                                <button onClick={() => setIsExpenseModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md">
+                                    Cancel
+                                </button>
+                                <button onClick={handleSaveExpenses} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md">
+                                    Save
+                                </button>
+                            </div>
                         </div>
-                    ))}
-                    <div className="flex justify-center">
-                        <button onClick={handleAddExpenseItem} className="bg-gray-200 text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">
-                            Add More
-                        </button>
-                    </div>
-                    <div className="flex justify-center space-x-4">
-                        <button onClick={() => setIsExpenseModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md">
-                            Cancel
-                        </button>
-                        <button onClick={handleSaveExpenses} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md">
-                            Save
-                        </button>
                     </div>
                 </div>
-            </Modal>
+            )}
         </div>
     );
 }
