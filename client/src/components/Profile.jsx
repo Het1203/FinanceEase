@@ -460,7 +460,7 @@ function Profile() {
                         <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Edit Profile</h2>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Name</label>
+                                <label className="block text-md font-medium text-gray-800">Name</label>
                                 <input
                                     placeholder="eg. John Doe"
                                     type="text"
@@ -471,7 +471,7 @@ function Profile() {
                                 {editUserErrors.username && <p className="text-red-500 text-sm mt-1">{editUserErrors.username}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Email</label>
+                                <label className="block text-md font-medium text-gray-800">Email</label>
                                 <input
                                     type="email"
                                     placeholder="eg. abc@gmail.com"
@@ -482,7 +482,7 @@ function Profile() {
                                 {editUserErrors.email && <p className="text-red-500 text-sm mt-1">{editUserErrors.email}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Occupation</label>
+                                <label className="block text-md font-medium text-gray-800">Occupation</label>
                                 <input
                                     type="text"
                                     placeholder="eg. Doctor/Engineer"
@@ -493,7 +493,7 @@ function Profile() {
                                 {editUserErrors.profession && <p className="text-red-500 text-sm mt-1">{editUserErrors.profession}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                                <label className="block text-md font-medium text-gray-800">Phone</label>
                                 <input
                                     type="text"
                                     placeholder="eg. 1234567890"
@@ -504,7 +504,7 @@ function Profile() {
                                 {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Age</label>
+                                <label className="block text-md font-medium text-gray-800">Age</label>
                                 <input
                                     type="text"
                                     placeholder="eg. 25"
@@ -515,7 +515,7 @@ function Profile() {
                                 {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Marital Status</label>
+                                <label className="block text-md font-medium text-gray-800">Marital Status</label>
                                 <input
                                     type="text"
                                     placeholder="eg. Single/Married/Divorced"
@@ -523,7 +523,7 @@ function Profile() {
                                     onChange={(e) => setEditUser({ ...editUser, maritalStatus: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                                 />
-                                {editUserErrors.maritalStatus && <p className="text-red-500 text-sm mt-1">{editUserErrors.maritalStatus}</p>}
+                                {editUserErrors.maritalStatus && <p className="text-red-500 text-md mt-1">{editUserErrors.maritalStatus}</p>}
                             </div>
                             <div className="flex justify-center space-x-2">
                                 <button
@@ -550,7 +550,7 @@ function Profile() {
             {/* Add Liability Modal */}
             {isLiabilitiesModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center max-w-3xl w-full">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
                         <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Liability</h2>
                         <div className="space-y-4">
                             <div>
@@ -583,6 +583,7 @@ function Profile() {
                                 {newLiabilityErrors.description && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.description}</p>}
                             </div>
                             <div>
+                                <label className="block text-md font-medium text-gray-800">Due Date</label>
                                 <input
                                     type="date"
                                     placeholder='Due Date'
