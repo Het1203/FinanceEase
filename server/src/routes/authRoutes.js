@@ -1,7 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { register, login, getMe, forgotPassword, resetPassword, logout } from '../controllers/authController.js';
-import { updateUserProfile } from '../controllers/userProfileController.js';
+import { register, login, getMe, updateUserProfile, forgotPassword, resetPassword, logout } from '../controllers/authController.js';
 import { protect } from '../middlewares/authMiddleware.js';
 import { validate } from '../middlewares/validationMiddleware.js';
 

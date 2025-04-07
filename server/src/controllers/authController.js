@@ -119,6 +119,22 @@ const getMe = async (req, res) => {
     }
 };
 
+const updateUserProfile = async (req, res) => {
+    const { username, email, phone, age, profession, maritalStatus } = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { username, email, phone, age, profession, maritalStatus },
+            { new: true }
+        );
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const forgotPassword = async (req, res) => {
     // Implement forgot password functionality
     res.status(200).json({ message: 'Forgot password endpoint' });
@@ -134,9 +150,9 @@ const logout = async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        expires: new Date(0), // Expire the cookie immediately
+        expires: new Date(0),
     });
     res.status(200).json({ message: 'User logged out successfully' });
 };
 
-export { register, login, getMe, forgotPassword, resetPassword, logout };
+export { register, login, getMe, updateUserProfile, forgotPassword, resetPassword, logout };
