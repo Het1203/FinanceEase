@@ -205,8 +205,8 @@ function Home() {
 
     return (
         <div className="space-y-6 ml-8 mt-4">
-            <h1 className="text-4xl font-bold text-[#4A4A4A]">Overview</h1>
-            <p className="text-xl text-gray-700 mb-5">Hello {user.name}, welcome back!</p>
+            <h1 className="text-4xl font-bold text-[#4A4A4A]" style={{ marginBottom: '12px' }} > Overview</h1>
+            <p className="text-2xl text-gray-800 mb-5">Hello {user.name}, welcome back!</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Income Sources */}
