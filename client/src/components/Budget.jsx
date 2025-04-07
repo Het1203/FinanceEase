@@ -205,7 +205,7 @@ function Budget() {
 
     return (
         <div className="space-y-6 ml-9 mt-4">
-            <div className="flex justify-between items-center mb-10">
+            <div className="flex justify-between items-center mb-8">
                 <div className='w-250'>
                     <h1 className="text-4xl font-bold text-[#4A4A4A]">Budget Your Month, Own Your Future!</h1>
                     <p className="text-gray-700 mt-2 text-xl">Create your monthly budgets here.</p>
