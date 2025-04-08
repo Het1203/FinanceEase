@@ -60,13 +60,14 @@ function EditGoalModal({ goal, onSave, onClose }) {
                     <X className="h-5 w-5" />
                 </button>
 
-                <h2 className="text-xl font-bold text-white mb-6 text-center">Edit your financial goal</h2>
+                <h2 className="text-2xl font-bold text-white mb-6 text-center">Edit your financial goal</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Name of Goal</label>
                         <input
                             type="text"
-                            placeholder="Goal Name"
+                            placeholder="Car, House, etc."
                             value={goalName}
                             onChange={(e) => setGoalName(e.target.value)}
                             className={`w-full px-3 py-2 rounded bg-[#D8CFD0] text-dark placeholder-[#697184] focus:outline-none focus:ring-2 focus:ring-white/50 ${errors.goalName ? "border border-red-400" : ""
@@ -76,9 +77,10 @@ function EditGoalModal({ goal, onSave, onClose }) {
                     </div>
 
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Target Amount (in Rs.)</label>
                         <input
-                            type="text"
-                            placeholder="Target Amount"
+                            type="number"
+                            placeholder="1,00,000"
                             value={targetAmount}
                             onChange={(e) => setTargetAmount(e.target.value)}
                             className={`w-full px-3 py-2 rounded bg-[#D8CFD0] text-dark placeholder-[#697184] focus:outline-none focus:ring-2 focus:ring-white/50 ${errors.targetAmount ? "border border-red-400" : ""
@@ -88,9 +90,10 @@ function EditGoalModal({ goal, onSave, onClose }) {
                     </div>
 
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Saved Amount (in Rs.)</label>
                         <input
-                            type="text"
-                            placeholder="Saved Amount"
+                            type="number"
+                            placeholder="10,000"
                             value={savedAmount}
                             onChange={(e) => setSavedAmount(e.target.value)}
                             className={`w-full px-3 py-2 rounded bg-[#D8CFD0] text-dark placeholder-[#697184] focus:outline-none focus:ring-2 focus:ring-white/50 ${errors.savedAmount ? "border border-red-400" : ""
@@ -100,9 +103,10 @@ function EditGoalModal({ goal, onSave, onClose }) {
                     </div>
 
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Priority Value</label>
                         <input
-                            type="text"
-                            placeholder="Priority value"
+                            type="number"
+                            placeholder="1-5"
                             value={priority}
                             onChange={(e) => setPriority(e.target.value)}
                             className={`w-full px-3 py-2 rounded bg-[#D8CFD0] text-dark placeholder-[#697184] focus:outline-none focus:ring-2 focus:ring-white/50 ${errors.priority ? "border border-red-400" : ""
@@ -114,7 +118,7 @@ function EditGoalModal({ goal, onSave, onClose }) {
                     <div className="flex justify-center pt-2">
                         <button
                             type="submit"
-                            className="bg-[#D8CFD0] text-[#697184] font-bold px-6 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                            className="bg-[#D8CFD0] text-gray-800 font-bold px-6 py-2 rounded-md hover:bg-gray-100 transition-colors"
                         >
                             Save Changes
                         </button>

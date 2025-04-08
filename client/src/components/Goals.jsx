@@ -200,7 +200,7 @@ function Goals() {
                     </p>
                     <button
                         onClick={() => setShowAddModal(true)}
-                        className="flex items-center justify-center bg-[#D8CFD0] text-[#8A8383] font-bold text-lg px-4 py-2 rounded-md hover:bg-gray-100 transition-colors flex items-center gap-2"
+                        className="flex items-center justify-center bg-white text-[#8A8383] font-bold text-lg px-4 py-2 rounded-md hover:bg-gray-200 transition-colors flex items-center gap-2"
                     >
                         <Plus className="h-4 w-4" />
                         Create a Goal
