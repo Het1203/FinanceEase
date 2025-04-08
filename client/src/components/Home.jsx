@@ -369,13 +369,13 @@ function Home() {
                             </div>
                             <div className="flex justify-center space-x-2">
                                 <button
-                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors"
                                     onClick={() => setIsIncomeModalOpen(false)}
                                 >
                                     Cancel
                                 </button>
                                 <button
-                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/70 transition-colors"
                                     onClick={handleIncomeSaveClick}
                                 >
                                     Save
