@@ -359,15 +359,23 @@ function Budget() {
             {/* Budget Modal */}
             {isBudgetModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-4xl h-[60vh] overflow-y-auto">
-                        <h2 className="text-xl flex justify-center text-[#4A4A4A] font-bold mb-4">Create Budget</h2>
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg w-full max-w-4xl h-[60vh] overflow-y-auto">
+                        <h2 className="text-2xl flex justify-center text-[#D8CFD0] font-bold mb-4">Create Budget</h2>
                         <div className="space-y-4">
+                            <div className="flex" style={{ marginBottom: '5px' }}>
+                                <div className="w-1/2">
+                                    <label className="block text-lg font-medium text-gray-800">Add Category</label>
+                                </div>
+                                <div className="w-1/2 ml-4">
+                                    <label className="block text-lg font-medium text-gray-800">Amount</label>
+                                </div>
+                            </div>
                             {budgetItems.map((item, index) => (
                                 <div key={index} className="flex space-x-4">
                                     <div className="w-1/2">
                                         <input
                                             type="text"
-                                            placeholder="Add Category"
+                                            placeholder="Food, Rent, etc."
                                             value={item.category}
                                             onChange={(e) => handleBudgetItemChange(index, 'category', e.target.value)}
                                             className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -377,7 +385,7 @@ function Budget() {
                                     <div className="w-1/2">
                                         <input
                                             type="number"
-                                            placeholder="Amount"
+                                            placeholder="eg. 1000"
                                             value={item.amount}
                                             onChange={(e) => handleBudgetItemChange(index, 'amount', e.target.value)}
                                             className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -391,16 +399,16 @@ function Budget() {
                                     )}
                                 </div>
                             ))}
-                            <div className="flex justify-center">
+                            <div className="ml-186">
                                 <button onClick={handleAddBudgetItem} className="bg-gray-200 text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">
                                     Add More
                                 </button>
                             </div>
                             <div className="flex justify-center space-x-4">
-                                <button onClick={() => setIsBudgetModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md">
+                                <button onClick={() => setIsBudgetModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors">
                                     Cancel
                                 </button>
-                                <button onClick={handleSaveBudget} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md">
+                                <button onClick={handleSaveBudget} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/80 transition-colors">
                                     Save
                                 </button>
                             </div>
@@ -412,15 +420,23 @@ function Budget() {
             {/* Expense Modal */}
             {isExpenseModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-4xl h-[60vh] overflow-y-auto">
-                        <h2 className="text-xl flex justify-center text-[#4A4A4A] font-bold mb-4">Manage Expenses</h2>
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg w-full max-w-4xl h-[60vh] overflow-y-auto">
+                        <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Manage Expenses</h2>
                         <div className="space-y-4">
+                            <div className="flex" style={{ marginBottom: '5px' }}>
+                                <div className="w-1/2">
+                                    <label className="block text-lg font-medium text-gray-800">Add Category</label>
+                                </div>
+                                <div className="w-1/2 ml-4">
+                                    <label className="block text-lg font-medium text-gray-800">Amount</label>
+                                </div>
+                            </div>
                             {expenseItems.map((item, index) => (
                                 <div key={index} className="flex space-x-4">
                                     <div className="w-1/2">
                                         <input
                                             type="text"
-                                            placeholder="Add Category"
+                                            placeholder="Food, Rent, etc."
                                             value={item.category}
                                             onChange={(e) => handleExpenseItemChange(index, 'category', e.target.value)}
                                             className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -430,7 +446,7 @@ function Budget() {
                                     <div className="w-1/2">
                                         <input
                                             type="number"
-                                            placeholder="Amount"
+                                            placeholder="eg. 1000"
                                             value={item.amount}
                                             onChange={(e) => handleExpenseItemChange(index, 'amount', e.target.value)}
                                             className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -444,16 +460,16 @@ function Budget() {
                                     )}
                                 </div>
                             ))}
-                            <div className="flex justify-center">
+                            <div className="ml-186">
                                 <button onClick={handleAddExpenseItem} className="bg-gray-200 text-[#4A4A4A] px-4 py-2 rounded-md hover:bg-gray-300 transition-colors">
                                     Add More
                                 </button>
                             </div>
                             <div className="flex justify-center space-x-4">
-                                <button onClick={() => setIsExpenseModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md">
+                                <button onClick={() => setIsExpenseModalOpen(false)} className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors">
                                     Cancel
                                 </button>
-                                <button onClick={handleSaveExpenses} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md">
+                                <button onClick={handleSaveExpenses} className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/80 transition-colors">
                                     Save
                                 </button>
                             </div>
