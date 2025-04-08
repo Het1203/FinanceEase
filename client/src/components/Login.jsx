@@ -74,7 +74,7 @@ function Login() {
     return (
         <div className="flex min-h-screen">
             {/* Left side - Logo */}
-            <div className="w-2/3 bg-white flex flex-col items-center justify-center p-8">
+            <div className="w-3/5 bg-white flex flex-col items-center justify-center p-8">
                 <h1 className="text-5xl font-bold text-[#4A4A4A] mb-10">FinanceEase</h1>
                 <div className="md:w-1/2 flex mx-28 justify-center">
                     <img src="/logo2.png" alt="Financial illustration" className="max-w-full h-auto" />
@@ -83,14 +83,16 @@ function Login() {
             </div>
 
             {/* Right side - Login form */}
-            <div className="w-1/3 bg-[#B3A9A2] flex flex-col items-center justify-center p-8">
-                <h2 className="text-3xl font-bold text-white mb-8">Login</h2>
+            <div className="w-2/5 bg-[#B3A9A2] flex flex-col items-center justify-center p-8">
+                <h2 className="text-6xl font-bold text-white mb-8">Login</h2>
+                <p className="text-xl font-medium text-center text-gray-800 mb-8">Welcome back! <br /> Please login to your account.</p>
 
                 <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Email</label>
                         <input
                             type="email"
-                            placeholder="Email"
+                            placeholder="johndoe@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
@@ -98,6 +100,7 @@ function Login() {
                         {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
                     </div>
 
+                    <label className="block text-lg font-medium text-gray-800" style={{ marginBottom: '2px' }}>Password</label>
                     <div className="relative">
                         <input
                             type={showPassword ? "text" : "password"}
@@ -113,21 +116,22 @@ function Login() {
                         >
                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
-                        {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                     </div>
+                    {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
 
                     <button
                         type="submit"
-                        className="w-full bg-[#D9D9D9] mt-5 text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
+                        className="w-full bg-white mt-5 text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
                     >
                         Login
                     </button>
 
-                    <div className="text-center">
+                    {/* <div className="text-center">
                         <Link to="/forgot-password" className="text-sm text-[#1A3A5A] hover:underline">
                             Forgot Password
                         </Link>
-                    </div>
+                    </div> */}
+
                 </form>
                 <div className="text-center mt-4">
                     <p className="text-[#4A4A4A]">
