@@ -445,11 +445,6 @@ function Profile() {
                             financeease@gmail.com
                         </p>
                     </div>
-                    {/* <div className="items-center mt-15 mb-4">
-                        <p className='text-3xl font-bold ml-2 text-[#1D3557] mt-4'>
-                            “You must gain control over your money, or the lack of it will forever control you.” — Dave Ramsey
-                        </p>
-                    </div> */}
                 </div>
             </div>
 
@@ -457,12 +452,12 @@ function Profile() {
             {editUser && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                     <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
-                        <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Edit Profile</h2>
+                        <h2 className="text-2xl flex justify-center text-[#D8CFD0] font-bold mb-4">Edit Profile</h2>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Name</label>
+                                <label className="block text-lg font-medium text-gray-800">Name</label>
                                 <input
-                                    placeholder="eg. John Doe"
+                                    placeholder="John Doe"
                                     type="text"
                                     value={editUser.username}
                                     onChange={(e) => setEditUser({ ...editUser, username: e.target.value })}
@@ -471,10 +466,10 @@ function Profile() {
                                 {editUserErrors.username && <p className="text-red-500 text-sm mt-1">{editUserErrors.username}</p>}
                             </div>
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Email</label>
+                                <label className="block text-lg font-medium text-gray-800">Email</label>
                                 <input
                                     type="email"
-                                    placeholder="eg. abc@gmail.com"
+                                    placeholder="johndoe@gmail.com"
                                     value={editUser.email}
                                     onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -482,10 +477,10 @@ function Profile() {
                                 {editUserErrors.email && <p className="text-red-500 text-sm mt-1">{editUserErrors.email}</p>}
                             </div>
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Occupation</label>
+                                <label className="block text-lg font-medium text-gray-800">Occupation</label>
                                 <input
                                     type="text"
-                                    placeholder="eg. Doctor/Engineer"
+                                    placeholder="Doctor/Engineer"
                                     value={editUser.profession}
                                     onChange={(e) => setEditUser({ ...editUser, profession: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -493,10 +488,10 @@ function Profile() {
                                 {editUserErrors.profession && <p className="text-red-500 text-sm mt-1">{editUserErrors.profession}</p>}
                             </div>
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Phone</label>
+                                <label className="block text-lg font-medium text-gray-800">Phone</label>
                                 <input
                                     type="text"
-                                    placeholder="eg. 1234567890"
+                                    placeholder="1234567890"
                                     value={editUser.phone}
                                     onChange={(e) => setEditUser({ ...editUser, phone: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -504,10 +499,10 @@ function Profile() {
                                 {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>}
                             </div>
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Age</label>
+                                <label className="block text-lg font-medium text-gray-800">Age</label>
                                 <input
                                     type="text"
-                                    placeholder="eg. 25"
+                                    placeholder="25"
                                     value={editUser.age}
                                     onChange={(e) => setEditUser({ ...editUser, age: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -515,10 +510,10 @@ function Profile() {
                                 {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>}
                             </div>
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Marital Status</label>
+                                <label className="block text-lg font-medium text-gray-800">Marital Status</label>
                                 <input
                                     type="text"
-                                    placeholder="eg. Single/Married/Divorced"
+                                    placeholder="Single/Married/Divorced"
                                     value={editUser.maritalStatus}
                                     onChange={(e) => setEditUser({ ...editUser, maritalStatus: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -527,7 +522,7 @@ function Profile() {
                             </div>
                             <div className="flex justify-center space-x-2">
                                 <button
-                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors"
                                     onClick={() => {
                                         setIsModalOpen(false);
                                         setEditUser(null);
@@ -536,7 +531,7 @@ function Profile() {
                                     Cancel
                                 </button>
                                 <button
-                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/70 transition-colors"
                                     onClick={handleSaveClick}
                                 >
                                     Save
@@ -551,12 +546,13 @@ function Profile() {
             {isLiabilitiesModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                     <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
-                        <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Liability</h2>
+                        <h2 className="text-2xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Liability</h2>
                         <div className="space-y-4">
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Name of Liability</label>
                                 <input
                                     type="text"
-                                    placeholder='Name of Liability'
+                                    placeholder='Loan, EMI etc.'
                                     value={newLiability.name}
                                     onChange={(e) => setNewLiability({ ...newLiability, name: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -564,9 +560,10 @@ function Profile() {
                                 {newLiabilityErrors.name && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.name}</p>}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Amount (in Rs.)</label>
                                 <input
                                     type="number"
-                                    placeholder='Amount'
+                                    placeholder='10,000'
                                     value={newLiability.amount}
                                     onChange={(e) => setNewLiability({ ...newLiability, amount: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -574,8 +571,10 @@ function Profile() {
                                 {newLiabilityErrors.amount && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.amount}</p>}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Description</label>
                                 <textarea
-                                    placeholder='Description'
+                                    placeholder='Description of Liability'
+                                    rows="4"
                                     value={newLiability.description}
                                     onChange={(e) => setNewLiability({ ...newLiability, description: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -583,7 +582,7 @@ function Profile() {
                                 {newLiabilityErrors.description && <p className="text-red-500 text-sm mt-1">{newLiabilityErrors.description}</p>}
                             </div>
                             <div>
-                                <label className="block text-md font-medium text-gray-800">Due Date</label>
+                                <label className="block text-lg font-medium text-gray-800">Due Date</label>
                                 <input
                                     type="date"
                                     placeholder='Due Date'
@@ -595,7 +594,7 @@ function Profile() {
                             </div>
                             <div className="flex justify-center space-x-2">
                                 <button
-                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors"
                                     onClick={() => {
                                         setIsLiabilitiesModalOpen(false);
                                     }}
@@ -603,7 +602,7 @@ function Profile() {
                                     Cancel
                                 </button>
                                 <button
-                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/70 transition-colors"
                                     onClick={handleLiabilitySaveClick}
                                 >
                                     Save
@@ -617,13 +616,14 @@ function Profile() {
             {/* Add Asset Modal */}
             {isAssetsModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center max-w-3xl w-full">
-                        <h2 className="text-xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Asset</h2>
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
+                        <h2 className="text-2xl flex justify-centre text-[#D8CFD0] font-bold ml-75 mb-4">Add Asset</h2>
                         <div className="space-y-4">
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Name of Asset</label>
                                 <input
                                     type="text"
-                                    placeholder='Name of Asset'
+                                    placeholder='House, Car etc.'
                                     value={newAsset.name}
                                     onChange={(e) => setNewAsset({ ...newAsset, name: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -631,9 +631,10 @@ function Profile() {
                                 {newAssetErrors.name && <p className="text-red-500 text-sm mt-1">{newAssetErrors.name}</p>}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Amount (in Rs.)</label>
                                 <input
                                     type="number"
-                                    placeholder='Amount'
+                                    placeholder='10,000'
                                     value={newAsset.amount}
                                     onChange={(e) => setNewAsset({ ...newAsset, amount: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -641,8 +642,10 @@ function Profile() {
                                 {newAssetErrors.amount && <p className="text-red-500 text-sm mt-1">{newAssetErrors.amount}</p>}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Description</label>
                                 <textarea
-                                    placeholder='Description'
+                                    placeholder='Description of Asset'
+                                    rows="4"
                                     value={newAsset.description}
                                     onChange={(e) => setNewAsset({ ...newAsset, description: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -651,13 +654,13 @@ function Profile() {
                             </div>
                             <div className="flex justify-center space-x-2">
                                 <button
-                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md"
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors"
                                     onClick={() => setIsAssetsModalOpen(false)}
                                 >
                                     Cancel
                                 </button>
                                 <button
-                                    className="bg-[#D8CFD0] text-[#817B7B] font-bold px-4 py-2 rounded-md"
+                                    className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/70 transition-colors"
                                     onClick={handleAssetSaveClick}
                                 >
                                     Save
