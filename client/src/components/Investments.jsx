@@ -295,15 +295,16 @@ function Investments() {
             {/* Add Investment Modal */}
             {isInvestmentModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-4xl h-[62vh] overflow-y-auto">
-                        <h2 className="text-2xl flex justify-center text-[#4A4A4A] font-bold mb-4">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg w-full max-w-4xl h-[85vh] overflow-y-auto">
+                        <h2 className="text-2xl flex justify-center text-[#D8CFD0] font-bold mb-4">
                             Add Investment
                         </h2>
                         <div className="space-y-4">
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Name of Investment</label>
                                 <input
                                     type="text"
-                                    placeholder="Name of Investment (eg. Stocks, Bonds)"
+                                    placeholder="Stocks, Bonds etc."
                                     value={newInvestment.name}
                                     onChange={(e) => handleInputChange("name", e.target.value)}
                                     className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -313,9 +314,10 @@ function Investments() {
                                 )}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Amount Invested (in Rs.)</label>
                                 <input
                                     type="number"
-                                    placeholder="Amount Invested (eg. 1000)"
+                                    placeholder="10,000"
                                     value={newInvestment.amount}
                                     onChange={(e) => handleInputChange("amount", e.target.value)}
                                     className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -325,6 +327,7 @@ function Investments() {
                                 )}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Date of Investment</label>
                                 <input
                                     type="date"
                                     placeholder="Date of Investment"
@@ -337,9 +340,10 @@ function Investments() {
                                 )}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Expected Return (in %)</label>
                                 <input
-                                    type="text"
-                                    placeholder="Expected Return (eg. 10%)"
+                                    type="number"
+                                    placeholder="10"
                                     value={newInvestment.expectedReturn}
                                     onChange={(e) => handleInputChange("expectedReturn", e.target.value)}
                                     className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -349,9 +353,10 @@ function Investments() {
                                 )}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Holding Time (in years)</label>
                                 <input
-                                    type="text"
-                                    placeholder="Holding Time (eg. 5 years)"
+                                    type="number"
+                                    placeholder="5"
                                     value={newInvestment.timeOfReturn}
                                     onChange={(e) => handleInputChange("timeOfReturn", e.target.value)}
                                     className="w-full bg-gray-200 rounded-md p-2 focus:outline-none"
@@ -361,6 +366,7 @@ function Investments() {
                                 )}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Status</label>
                                 <select
                                     value={newInvestment.status}
                                     onChange={(e) => handleInputChange("status", e.target.value)}
