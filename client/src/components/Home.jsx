@@ -342,13 +342,14 @@ function Home() {
             {/* Add Income Source Modal */}
             {isIncomeModalOpen && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center max-w-3xl w-full">
-                        <h2 className="text-xl flex justify-center text-[#D8CFD0] font-bold mb-4">Add Income Source</h2>
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
+                        <h2 className="text-2xl flex justify-center text-[#D8CFD0] font-bold mb-4">Add Income Source</h2>
                         <div className="space-y-4">
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Income Source Name</label>
                                 <input
                                     type="text"
-                                    placeholder="Name of Income Source"
+                                    placeholder="Salary, Business, etc."
                                     value={newIncomeSource.name}
                                     onChange={(e) => setNewIncomeSource({ ...newIncomeSource, name: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
@@ -356,9 +357,10 @@ function Home() {
                                 {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
                             </div>
                             <div>
+                                <label className="block text-lg font-medium text-gray-800">Income Source Amount (Yearly)</label>
                                 <input
                                     type="number"
-                                    placeholder="Amount (Yearly)"
+                                    placeholder="eg. 1,00,000"
                                     value={newIncomeSource.amount}
                                     onChange={(e) => setNewIncomeSource({ ...newIncomeSource, amount: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
