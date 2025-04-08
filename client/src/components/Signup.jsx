@@ -106,13 +106,15 @@ function Signup() {
 
             {/* Right side - Signup form */}
             <div className="w-2/5 bg-[#B3A9A2] flex flex-col items-center justify-center p-8">
-                <h2 className="text-6xl font-bold text-white mb-10">Signup</h2>
+                <h2 className="text-6xl font-bold text-white mb-8">Signup</h2>
+                <p className="text-gray-800 text-xl font-medium mb-4">Create your account</p>
 
                 <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Full Name</label>
                         <input
                             type="text"
-                            placeholder="Full Name"
+                            placeholder="John Doe"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
@@ -121,9 +123,10 @@ function Signup() {
                     </div>
 
                     <div className="relative">
+                        <label className="block text-lg font-medium text-gray-800">Email</label>
                         <input
                             type="email"
-                            placeholder="Email"
+                            placeholder="johndoe@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
@@ -132,9 +135,10 @@ function Signup() {
                     </div>
 
                     <div>
+                        <label className="block text-lg font-medium text-gray-800">Profession</label>
                         <input
                             type="text"
-                            placeholder="Profession"
+                            placeholder="Engineer, Doctor, etc."
                             value={profession}
                             onChange={(e) => setProfession(e.target.value)}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
@@ -142,10 +146,11 @@ function Signup() {
                         {professionError && <p className="text-red-500 text-sm mt-1">{professionError}</p>}
                     </div>
 
+                    <label className="block text-lg font-medium text-gray-800" style={{ marginBottom: '2px' }}>Password</label>
                     <div className="relative">
                         <input
                             type={showPassword ? "text" : "password"}
-                            placeholder="Password"
+                            placeholder="********"
                             value={password}
                             onChange={handlePasswordChange}
                             className="w-full px-3 py-2 rounded bg-[#D9D9D9] placeholder-gray-500 focus:outline-none"
@@ -157,12 +162,12 @@ function Signup() {
                         >
                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
-                        {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                     </div>
+                    {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
 
                     <button
                         type="submit"
-                        className="w-full bg-[#D9D9D9] text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
+                        className="w-full bg-white mt-6 text-[#4A4A4A] text-xl font-bold py-2 rounded hover:bg-[#c0c0c0] transition-colors"
                     >
                         Signup
                     </button>
@@ -175,7 +180,7 @@ function Signup() {
                         </Link>
                     </p>
                     <p className="text-[#4A4A4A] text-xl mt-10">
-                        Want to join as an expert?{" "}
+                        Want to join as an Expert?{" "}
                         <Link to="/expert-register" className="text-blue-900 font-bold hover:underline">
                             Register as Expert
                         </Link>
