@@ -7,6 +7,7 @@ function YourBlogs() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newBlog, setNewBlog] = useState({ title: '', content: '' });
     const [selectedBlog, setSelectedBlog] = useState(null);
+    const [errors, setErrors] = useState({});
     const [expertName, setExpertName] = useState('');
 
     useEffect(() => {
@@ -14,11 +15,11 @@ function YourBlogs() {
             try {
                 const response = await fetch('http://localhost:5000/api/expert/me', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setExpertName(data.name); // Ensure the correct property is used
+                    setExpertName(data.name);
                 } else {
                     console.error('Failed to fetch expert name');
                 }
@@ -35,7 +36,7 @@ function YourBlogs() {
             try {
                 const response = await fetch('http://localhost:5000/api/blogs/myblogs', {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -53,26 +54,40 @@ function YourBlogs() {
 
     const handlePostNewBlogClick = () => {
         setNewBlog({ title: '', content: '' });
+        setErrors({});
         setIsModalOpen(true);
     };
 
+    const validateBlogFields = () => {
+        const newErrors = {};
+        if (!newBlog.title.trim()) {
+            newErrors.title = 'Blog title is required.';
+        }
+        if (!newBlog.content.trim()) {
+            newErrors.content = 'Blog content is required.';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSaveBlog = async () => {
+        if (!validateBlogFields()) return;
+
         try {
             const response = await fetch('http://localhost:5000/api/blogs/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
                 body: JSON.stringify(newBlog),
             });
 
             if (response.ok) {
                 const savedBlog = await response.json();
-                // Fetch the newly created blog with the populated author field
                 const populatedBlogResponse = await fetch(`http://localhost:5000/api/blogs/get/${savedBlog._id}`, {
                     method: 'GET',
-                    credentials: 'include', // Include cookies in the request
+                    credentials: 'include',
                 });
                 if (populatedBlogResponse.ok) {
                     const populatedBlog = await populatedBlogResponse.json();
@@ -92,12 +107,12 @@ function YourBlogs() {
     };
 
     const handleDeleteBlog = async (event, index) => {
-        event.stopPropagation(); // Stop event propagation
+        event.stopPropagation();
         const blogToDelete = blogs[index];
         try {
             const response = await fetch(`http://localhost:5000/api/blogs/delete/${blogToDelete._id}`, {
                 method: 'DELETE',
-                credentials: 'include', // Include cookies in the request
+                credentials: 'include',
             });
 
             if (response.ok) {
@@ -131,8 +146,8 @@ function YourBlogs() {
                         onClick={() => handleBlogClick(blog)}
                     >
                         <div>
-                            <h3 className="text-[#D8CFD0] text-2xl font-bold">{blog.title}</h3>
-                            <p className="text-xl font-medium text-[#D8CFD0]">
+                            <h3 className="text-[#102647] text-2xl font-bold">{blog.title}</h3>
+                            <p className="text-lg text-dark">
                                 {blog.author.name} • {blog.date}
                             </p>
                         </div>
@@ -144,63 +159,76 @@ function YourBlogs() {
             </div>
 
             {/* Post New Blog Modal */}
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">Post New Blog</h2>
-                <div className="space-y-4">
-                    <div>
-                        <label className="block text-xl font-bold text-[#D8CFD0]">Blog Title</label>
-                        <input
-                            type="text"
-                            value={newBlog.title}
-                            onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-xl font-bold text-[#D8CFD0]">Content</label>
-                        <textarea
-                            value={newBlog.content}
-                            onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
-                            className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
-                        />
-                    </div>
-                    <div className="flex justify-center space-x-2">
-                        <button
-                            className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md"
-                            onClick={() => setIsModalOpen(false)}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            className="bg-[#D8CFD0] text-[#817B7B] text-xl font-bold px-4 py-2 rounded-md"
-                            onClick={handleSaveBlog}
-                        >
-                            Save
-                        </button>
-                    </div>
-                </div>
-            </Modal>
-
-            {/* Blog Details Modal */}
-            {selectedBlog && (
-                <Modal isOpen={!!selectedBlog} onClose={() => setSelectedBlog(null)}>
-                    <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">{selectedBlog.title}</h2>
-                    <div className="space-y-4">
-                        <p className="text-xl text-blue-100 font-bold mb-10">
-                            {selectedBlog.author.name} • {selectedBlog.date}
-                        </p>
-                        <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
-                        <div className="flex justify-center space-x-2 mt-20">
-                            <button
-                                className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md"
-                                onClick={() => setSelectedBlog(null)}
-                            >
-                                Close
-                            </button>
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg max-w-3xl w-full">
+                        <h2 className="text-2xl flex justify-center text-[#D8CFD0] font-bold mb-4">Post New Blog</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-lg font-medium text-gray-800">Blog Title</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter blog title"
+                                    value={newBlog.title}
+                                    onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {errors.title && <p className="text-red-600 text-md mt-1">{errors.title}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-lg font-medium text-gray-800">Content</label>
+                                <textarea
+                                    value={newBlog.content}
+                                    placeholder="Enter blog content"
+                                    rows="15"
+                                    onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
+                                    className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
+                                />
+                                {errors.content && <p className="text-red-600 text-md mt-1">{errors.content}</p>}
+                            </div>
+                            <div className="flex justify-center space-x-2">
+                                <button
+                                    className="bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-md hover:bg-gray-400 transition-colors"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="bg-[#4A4A4A] text-white font-bold px-4 py-2 rounded-md hover:bg-[#4A4A4A]/70 transition-colors"
+                                    onClick={handleSaveBlog}
+                                >
+                                    Save
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </Modal>
+                </div>
             )}
+
+            {/* Blog Details Modal */}
+            {
+                selectedBlog && (
+                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                        <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-6xl h-[80vh] overflow-y-auto">
+                            <h2 className="text-3xl flex justify-center text-[#102647] font-bold mt-3 mb-4">{selectedBlog.title}</h2>
+                            <div className="space-y-4">
+                                <p className="text-xl text-dark font-medium mb-10">
+                                    {selectedBlog.author.name} • {selectedBlog.date}
+                                </p>
+                                <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
+                                <div className="flex justify-center space-x-2 mt-10">
+                                    <button
+                                        className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md hover:bg-gray-100"
+                                        onClick={() => setSelectedBlog(null)}
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 }
