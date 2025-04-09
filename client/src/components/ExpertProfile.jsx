@@ -72,8 +72,9 @@ function ExpertProfile() {
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-4xl font-bold text-[#4A4A4A] ml-5 mb-4">Profile</h1>
+        <div className="space-y-6">
+            <h1 className="text-3xl font-bold text-[#4A4A4A] ml-5 mt-10 mb-2">Profile</h1>
+            <p className="text-xl text-gray-700 ml-5 mb-3">Welcome, {expert.name}!</p>
             <div className="flex">
                 {/* Left half */}
                 <div className="w-3/5 p-5 h-60">
@@ -122,7 +123,7 @@ function ExpertProfile() {
                         <h2 className="text-3xl font-bold text-[#1D3557] ml-10 mt-5">
                             Finding difficulties?
                         </h2>
-                        <p className="text-2xl text-dark ml-10 mt-4">
+                        <p className="text-xl text-dark ml-10 mt-6">
                             For any queries email on:
                             <br />
                             financeease@gmail.com
