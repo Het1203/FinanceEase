@@ -352,22 +352,52 @@ function Profile() {
                     <div className="flex flex-col h-full space-y-2">
                         <div className="flex-1 p-4 rounded bg-[#697184]">
                             <div className="flex">
-                                <div className="w-1/4 ml-15 mt-10">
+                                {/* <div className="w-1/4 ml-15 mt-10">
                                     <img src="/person.png" alt="User" className="w-24 h-24 rounded-full object-cover" />
-                                </div>
-                                <div className="w-3/4 flex flex-col ml-15">
-                                    <div className="flex justify-between items-center">
+                                </div> */}
+                                <div className="w-3/4 flex flex-col ml-2 w-full">
+                                    <div className="flex items-center justify-between">
                                         <h2 className="text-2xl font-bold text-[#1D3557]">Profile Information</h2>
-                                        <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200" onClick={handleEditClick}>
+                                        <button
+                                            className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200"
+                                            onClick={handleEditClick}
+                                        >
                                             Edit
                                         </button>
                                     </div>
-                                    <p className="text-dark">Name: {user.username}</p>
-                                    <p className="text-dark">Email: {user.email}</p>
-                                    <p className="text-dark">Occupation: {user.profession}</p>
-                                    <p className="text-dark">Phone: {user.phone}</p>
-                                    <p className="text-dark">Age: {user.age}</p>
-                                    <p className="text-dark">Marital Status: {user.maritalStatus}</p>
+                                    <div className="flex mt-2">
+                                        {/* Left Column */}
+                                        <div className="w-1/3 flex flex-col space-y-2 text-lg">
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/4">Name:</p>
+                                                <p className="text-dark">{user.username}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/4">Email:</p>
+                                                <p className="text-dark">{user.email}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/4">Age:</p>
+                                                <p className="text-dark">{user.age}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Right Column */}
+                                        <div className="w-2/3 flex flex-col space-y-2 text-lg ml-10">
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/3">Occupation:</p>
+                                                <p className="text-dark">{user.profession}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/3">Phone No.:</p>
+                                                <p className="text-dark">{user.phone}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/3">Marital Status:</p>
+                                                <p className="text-dark">{user.maritalStatus}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
