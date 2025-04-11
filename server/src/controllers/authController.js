@@ -1,5 +1,13 @@
 import User from '../models/User.js';
 import Expert from '../models/Expert.js';
+import Budget from '../models/Budget.js';
+import Expense from '../models/Expense.js';
+import Investment from '../models/Investment.js';
+import Goal from '../models/Goal.js';
+import Blog from '../models/Blog.js';
+import Asset from '../models/Asset.js';
+import Liability from '../models/Liability.js';
+import IncomeSource from '../models/IncomeSource.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
@@ -155,4 +163,102 @@ const logout = async (req, res) => {
     res.status(200).json({ message: 'User logged out successfully' });
 };
 
-export { register, login, getMe, updateUserProfile, forgotPassword, resetPassword, logout };
+const search = async (req, res) => {
+    const { query } = req.query;
+
+    if (!query || query.trim() === "") {
+        return res.status(400).json({ error: "Query parameter is required" });
+    }
+
+    try {
+        const userId = req.user._id;
+
+        const budgets = await Budget.find({
+            user: userId,
+            budget: { $elemMatch: { category: { $regex: query, $options: "i" } } },
+        });
+
+        const expenses = await Expense.find({
+            user: userId,
+            expenses: { $elemMatch: { category: { $regex: query, $options: "i" } } },
+        });
+
+        const investments = await Investment.find({ user: userId, name: { $regex: query, $options: "i" } });
+        const goals = await Goal.find({ userId: userId, goalName: { $regex: query, $options: "i" } });
+        const blogs = await Blog.find({ title: { $regex: query, $options: "i" } });
+        const assets = await Asset.find({ user: userId, name: { $regex: query, $options: "i" } });
+        const liabilities = await Liability.find({ user: userId, name: { $regex: query, $options: "i" } });
+        const incomesources = await IncomeSource.find({ userId: userId, name: { $regex: query, $options: "i" } });
+
+        const budgetResult =
+            budgets.length > 0
+                ? {
+                    id: budgets[0]._id,
+                    title: `Budget: ${budgets[0].budget.find((b) =>
+                        new RegExp(query, "i").test(b.category)
+                    ).category}`,
+                    description: "Budget",
+                    url: `/dashboard/budget`,
+                }
+                : null;
+
+        const expenseResult =
+            expenses.length > 0
+                ? {
+                    id: expenses[0]._id,
+                    title: `Expense: ${expenses[0].expenses.find((e) =>
+                        new RegExp(query, "i").test(e.category)
+                    ).category}`,
+                    description: "Expense",
+                    url: `/dashboard/budget`,
+                }
+                : null;
+
+        const results = [
+            ...(budgetResult ? [budgetResult] : []),
+            ...(expenseResult ? [expenseResult] : []),
+            ...investments.map((item) => ({
+                id: item._id,
+                title: item.name,
+                description: "Investment",
+                url: `/dashboard/investments`,
+            })),
+            ...goals.map((item) => ({
+                id: item._id,
+                title: item.goalName,
+                description: "Goal",
+                url: `/dashboard/goals`,
+            })),
+            ...blogs.map((item) => ({
+                id: item._id,
+                title: item.title,
+                description: "Blog",
+                url: `/dashboard/blogs`,
+            })),
+            ...assets.map((item) => ({
+                id: item._id,
+                title: item.name,
+                description: "Asset",
+                url: `/dashboard/profile`,
+            })),
+            ...liabilities.map((item) => ({
+                id: item._id,
+                title: item.name,
+                description: "Liability",
+                url: `/dashboard/profile`,
+            })),
+            ...incomesources.map((item) => ({
+                id: item._id,
+                title: item.name,
+                description: "Income Source",
+                url: `/dashboard/home`,
+            })),
+        ];
+
+        res.json({ results });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch search results" });
+    }
+};
+
+export { register, login, getMe, updateUserProfile, forgotPassword, resetPassword, logout, search };

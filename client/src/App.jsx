@@ -16,6 +16,7 @@ import ExpertProfile from './components/ExpertProfile';
 import YourBlogs from './components/YourBlogs';
 import AllBlogs from './components/AllBlogs';
 import Connect from './components/Connect';
+import SearchResults from './layouts/SearchResults';
 import { Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="goals" element={<Goals />} />
           <Route path="profile" element={<Profile />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="search" element={<SearchResults />} />
         </Route>
         <Route path="/expert" element={<ExpertDashboard />}>
           <Route index element={<Navigate to="expert/profile" replace />} />
