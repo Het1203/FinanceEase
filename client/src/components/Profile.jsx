@@ -352,10 +352,10 @@ function Profile() {
                     <div className="flex flex-col h-full space-y-2">
                         <div className="flex-1 p-4 rounded bg-[#697184]">
                             <div className="flex">
-                                <div className="w-1/3 mx-5 mt-10">
+                                <div className="w-1/4 ml-15 mt-10">
                                     <img src="/person.png" alt="User" className="w-24 h-24 rounded-full object-cover" />
                                 </div>
-                                <div className="w-2/3 flex flex-col">
+                                <div className="w-3/4 flex flex-col ml-15">
                                     <div className="flex justify-between items-center">
                                         <h2 className="text-2xl font-bold text-[#1D3557]">Profile Information</h2>
                                         <button className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200" onClick={handleEditClick}>
