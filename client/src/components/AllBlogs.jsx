@@ -39,7 +39,7 @@ function AllBlogs() {
                 {blogs.map((blog, index) => (
                     <div
                         key={index}
-                        className="text-white p-4 rounded-md mb-4 border-b border-[#D8CFD0] last:border-0 last:mb-0 cursor-pointer flex justify-between items-center"
+                        className="p-4 rounded-md mb-4 border-b last:border-0 last:mb-0 cursor-pointer flex justify-between items-center"
                         onClick={() => handleBlogClick(blog)}
                     >
                         <div>

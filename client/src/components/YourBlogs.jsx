@@ -142,12 +142,12 @@ function YourBlogs() {
                 {blogs.map((blog, index) => (
                     <div
                         key={index}
-                        className="text-white p-4 rounded-md mb-4 border-b border-[#D8CFD0] last:border-0 last:mb-0 cursor-pointer flex justify-between items-center"
+                        className="p-4 rounded-md mb-4 border-b last:border-0 last:mb-0 cursor-pointer flex justify-between items-center"
                         onClick={() => handleBlogClick(blog)}
                     >
                         <div>
                             <h3 className="text-[#102647] text-2xl font-bold">{blog.title}</h3>
-                            <p className="text-lg text-dark">
+                            <p className="text-lg text-dark mt-1">
                                 {blog.author.name} • {blog.date}
                             </p>
                         </div>
