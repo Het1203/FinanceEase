@@ -230,7 +230,7 @@ function Home() {
                 <div className="bg-[#697184] p-6 rounded-md shadow-sm">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-bold text-[#102647]">Heads of Income</h2>
-                        <button className="bg-[#D8CFD0] text-[#1D3557] px-4 py-1 rounded-full cursor-pointer" onClick={handleAddIncomeSourceClick}>
+                        <button className="bg-[#D8CFD0] text-[#1D3557] px-4 py-1 rounded-full cursor-pointer hover:bg-gray-50" onClick={handleAddIncomeSourceClick}>
                             Add More
                         </button>
                     </div>
@@ -329,7 +329,7 @@ function Home() {
                 <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-bold text-[#102647]">Blogs</h2>
-                        <Link to="/dashboard/blogs" className="bg-[#697184] text-[#D8CFD0] px-4 py-1 rounded-full">
+                        <Link to="/dashboard/blogs" className="bg-[#697184] text-[#D8CFD0] px-4 py-1 rounded-full hover:bg-gray-400 cursor-pointer">
                             View all
                         </Link>
                     </div>
@@ -352,13 +352,19 @@ function Home() {
             {/* Blog Details Modal */}
             {selectedBlog && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-[#697184] p-6 rounded-md shadow-lg text-center w-full max-w-6xl h-[80vh] overflow-y-auto">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-lg w-full max-w-6xl h-[80vh] overflow-y-auto">
                         <h2 className="text-3xl flex justify-center text-[#D8CFD0] font-bold mb-4">{selectedBlog.title}</h2>
                         <div className="space-y-4">
-                            <p className="text-xl text-dark font-medium mb-10">
+                            <p className="text-xl text-dark font-medium text-center mb-10">
                                 {selectedBlog.author.name} • {selectedBlog.date}
                             </p>
-                            <p className="text-xl text-[#D8CFD0]">{selectedBlog.content}</p>
+                            <p className="text-xl text-[#D8CFD0]">
+                                {selectedBlog.content.split('\n').map((paragraph, index) => (
+                                    <span key={index} className="block mb-4">
+                                        {paragraph}
+                                    </span>
+                                ))}
+                            </p>
                             <div className="flex justify-center space-x-2 mt-20">
                                 <button
                                     className="bg-gray-300 text-gray-700 text-xl font-bold px-4 py-2 rounded-md"
