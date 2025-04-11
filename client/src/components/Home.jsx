@@ -18,6 +18,9 @@ function Home() {
         occupation: '',
         image: '/person.png'
     });
+    const [nameError, setNameError] = useState('');
+    const [amountError, setAmountError] = useState('');
+    const [goals, setGoals] = useState([]);
 
     useEffect(() => {
         const fetchIncomeSources = async () => {
@@ -110,7 +113,24 @@ function Home() {
                 console.error('Error fetching blogs:', error);
             }
         };
+        const fetchGoals = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/goals', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setGoals(data);
+                } else {
+                    console.error('Failed to fetch goals');
+                }
+            } catch (error) {
+                console.error('Error fetching goals:', error);
+            }
+        };
 
+        fetchGoals();
         fetchIncomeSources();
         fetchLiabilities();
         fetchAssets();
@@ -121,9 +141,6 @@ function Home() {
     const handleAddIncomeSourceClick = () => {
         setIsIncomeModalOpen(true);
     };
-
-    const [nameError, setNameError] = useState('');
-    const [amountError, setAmountError] = useState('');
 
     const validateIncomeSource = () => {
         let isValid = true;
@@ -213,7 +230,7 @@ function Home() {
                 <div className="bg-[#697184] p-6 rounded-md shadow-sm">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-bold text-[#102647]">Heads of Income</h2>
-                        <button className="bg-[#D8CFD0] text-[#1D3557] px-4 py-1 rounded-full" onClick={handleAddIncomeSourceClick}>
+                        <button className="bg-[#D8CFD0] text-[#1D3557] px-4 py-1 rounded-full cursor-pointer" onClick={handleAddIncomeSourceClick}>
                             Add More
                         </button>
                     </div>
@@ -230,13 +247,13 @@ function Home() {
                     </div>
                 </div>
 
-                {/* Profile Card */}
                 <Link to="/dashboard/profile">
-                    <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm flex flex-col items-center">
+                    {/* Profile Card */}
+                    {/* <div className="bg-[#D8CFD0] p-6 h-60 rounded-md shadow-sm flex flex-col items-center">
                         <div className="w-20 h-20 rounded-full bg-white mb-4 overflow-hidden">
                             <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
                         </div>
-                        <div className="space-y-1 text-center">
+                        <div className="space-y-1 text-center mt-10">
                             <p className="text-xl text-[#4A4A4A]">
                                 <span className="font-bold">Name:</span> {user.name}
                             </p>
@@ -247,18 +264,14 @@ function Home() {
                                 <span className="font-bold">Occupation:</span> {user.occupation}
                             </p>
                         </div>
-                    </div>
-                </Link>
-            </div>
+                    </div> */}
 
-            <Link to="/dashboard/profile">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     {/* Liabilities */}
                     <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm">
                         <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Liabilities</h2>
                         <div className="space-y-4">
                             {liabilities.map((liability, index) => (
-                                <div key={index} className="border-b pb-2">
+                                <div key={index} className="border-b pb-2 rounded-md">
                                     <div className="flex justify-between">
                                         <span className="text-[#4A4A4A] text-xl font-bold">{liability.name}</span>
                                         <span className="text-[#4A4A4A] text-xl font-bold">Due Date</span>
@@ -271,23 +284,43 @@ function Home() {
                             ))}
                         </div>
                     </div>
+                </Link>
+            </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <Link to="/dashboard/profile">
                     {/* Assets */}
-                    <div className="bg-[#697184] p-6 rounded-md shadow-sm">
+                    <div className="bg-[#D8CFD0] p-6 rounded-md shadow-sm">
                         <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Assets</h2>
                         <div className="space-y-3">
                             {assets.map((asset, index) => (
-                                <div key={index} className="flex justify-between items-center bg-[#D8CFD0] p-3 rounded-md">
+                                <div key={index} className="flex justify-between items-center p-3 border-b pb-2 rounded-md">
                                     <span className="text-[#4A4A4A] text-xl font-bold">{asset.name}</span>
                                     <span className="text-[#4A4A4A] text-xl font-bold">worth Rs. {asset.amount}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </div>
-            </Link>
+                </Link>
+
+                {/* Goals */}
+                <Link to="/dashboard/goals">
+                    <div className="bg-[#697184] p-6 rounded-md shadow-sm">
+                        <h2 className="text-2xl font-bold text-[#102647] mb-4">Your Goals</h2>
+                        <div className="space-y-3">
+                            {goals.map((goal, index) => (
+                                <div key={index} className="flex justify-between items-center bg-[#D8CFD0] p-3 rounded-md">
+                                    <span className="text-[#4A4A4A] text-xl font-bold">{goal.goalName}</span>
+                                    <span className="text-[#4A4A4A] text-xl font-bold">Rs. {goal.targetAmount.toLocaleString()}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Link>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                 <div>
 
                 </div>
@@ -302,10 +335,10 @@ function Home() {
                     </div>
                     <div className="space-y-4">
                         {blogs.map((blog, index) => (
-                            <div key={index} className="flex items-center space-x-3 cursor-pointer border-b border-[#697184] pb-2 last:border-0" onClick={() => handleBlogClick(blog)}>
-                                <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
+                            <div key={index} className="flex items-center space-x-3 cursor-pointer border-b rounded-md border-[#697184] pb-2 last:border-0" onClick={() => handleBlogClick(blog)}>
+                                {/* <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
                                     <img src="/person.png" alt="Author" className="w-full h-full object-cover" />
-                                </div>
+                                </div> */}
                                 <div>
                                     <h3 className="text-[#102647] text-xl font-bold">{blog.title}</h3>
                                     <p className="text-xl font-bold text-[#4A4A4A]">{blog.author.name} • {blog.date}</p>
