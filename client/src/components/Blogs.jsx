@@ -37,12 +37,12 @@ function Blogs() {
                 {blogs.map((blog, index) => (
                     <div
                         key={index}
-                        className="flex items-center space-x-3 cursor-pointer border-b border-[#102647] pb-2 last:border-0"
+                        className="flex items-center space-x-3 cursor-pointer border-b rounded-md border-[#102647] pb-2 last:border-0"
                         onClick={() => handleBlogClick(blog)}
                     >
-                        <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
+                        {/* <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
                             <img src="/person.png" alt="Author" className="w-full h-full object-cover" />
-                        </div>
+                        </div> */}
                         <div>
                             <h3 className="text-[#102647] text-2xl font-bold">{blog.title}</h3>
                             <p className="text-lg text-dark">{blog.author.name} • {blog.date}</p>
