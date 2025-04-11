@@ -81,35 +81,48 @@ function ExpertProfile() {
                     <div className="flex flex-col h-full space-y-2">
                         <div className="flex-1 p-4 rounded bg-[#697184]">
                             <div className="flex">
-                                <div className="w-1/3 ml-5 mt-10">
-                                    <img src="/person.png" alt="Expert" className="w-24 h-24 rounded-full object-cover" />
-                                </div>
-                                <div className="w-2/3 flex flex-col">
-                                    <div className="flex justify-between items-center">
-                                        <h2 className="text-3xl mb-3 font-bold text-[#1D3557]">Profile Information</h2>
-                                        <button className="bg-[#BABABA] font-bold mr-3 text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200" onClick={handleEditClick}>
+                                {/* Left Column */}
+                                <div className="w-3/4 flex flex-col ml-2 w-full">
+                                    <div className="flex items-center justify-between">
+                                        <h2 className="text-2xl font-bold text-[#1D3557]">Profile Information</h2>
+                                        <button
+                                            className="bg-[#BABABA] text-[#1D3557] px-4 py-1 rounded-full hover:bg-gray-200"
+                                            onClick={handleEditClick}
+                                        >
                                             Edit
                                         </button>
                                     </div>
-                                    <div className="space-y-2">
-                                        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                                            <div className="text-xl font-medium text-dark">Name:</div>
-                                            <div className="text-xl font-medium text-[#D8CFD0]">{expert.name}</div>
+                                    <div className="flex mt-2">
+                                        {/* Left Column */}
+                                        <div className="w-1/3 flex flex-col space-y-2 text-lg">
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/4">Name:</p>
+                                                <p className="text-dark">{expert.name}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/4">Email:</p>
+                                                <p className="text-dark">{expert.email}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/4">Age:</p>
+                                                <p className="text-dark">{expert.age}</p>
+                                            </div>
+                                        </div>
 
-                                            <div className="text-xl font-medium text-dark">Email:</div>
-                                            <div className="text-xl font-medium text-[#D8CFD0]">{expert.email}</div>
-
-                                            <div className="text-xl font-medium text-dark">Phone:</div>
-                                            <div className="text-xl font-medium text-[#D8CFD0]">{expert.phoneNumber}</div>
-
-                                            <div className="text-xl font-medium text-dark">Age:</div>
-                                            <div className="text-xl font-medium text-[#D8CFD0]">{expert.age}</div>
-
-                                            <div className="text-xl font-medium text-dark">Occupation:</div>
-                                            <div className="text-xl font-medium text-[#D8CFD0]">{expert.occupation}</div>
-
-                                            <div className="text-xl font-medium text-dark">Area of Expertise:</div>
-                                            <div className="text-xl font-medium text-[#D8CFD0]">{expert.expertise}</div>
+                                        {/* Right Column */}
+                                        <div className="w-2/3 flex flex-col space-y-2 text-lg ml-10">
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/3">Occupation:</p>
+                                                <p className="text-dark">{expert.occupation}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/3">Phone No.:</p>
+                                                <p className="text-dark">{expert.phoneNumber}</p>
+                                            </div>
+                                            <div className="flex">
+                                                <p className="font-bold text-[#1D3557] w-1/3">Area of Expertise:</p>
+                                                <p className="text-dark">{expert.expertise}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
