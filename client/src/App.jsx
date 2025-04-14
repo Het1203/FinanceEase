@@ -16,6 +16,8 @@ import ExpertProfile from './components/ExpertProfile';
 import YourBlogs from './components/YourBlogs';
 import AllBlogs from './components/AllBlogs';
 import Connect from './components/Connect';
+import About from './components/About';
+import Contact from './components/Contact';
 import SearchResults from './layouts/SearchResults';
 import { Navigate } from 'react-router-dom';
 import './App.css';
@@ -25,6 +27,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/expert-register" element={<ExpertRegister />} />

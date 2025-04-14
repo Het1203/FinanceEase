@@ -113,7 +113,7 @@ const Landing = () => {
                     <div className="flex gap-4">
                         <Link to="/about" className="hover:underline">About Us</Link>
                         <Link to="/contact" className="hover:underline">Contact</Link>
-                        <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
+                        {/* <Link to="/privacy" className="hover:underline">Privacy Policy</Link> */}
                     </div>
                 </div>
             </footer>
