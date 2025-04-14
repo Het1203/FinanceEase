@@ -10,7 +10,7 @@ function About() {
                 </Link>
                 <div className="flex gap-7 px-10">
                     <Link to="/signup" className="bg-[#B3A9A2] text-white text-lg px-4 py-1 rounded hover:bg-[#a39890] transition-colors">
-                        Sign up
+                        Register
                     </Link>
                     <Link to="/login" className="bg-[#B3A9A2] text-white text-lg px-4 py-1 rounded hover:bg-[#a39890] transition-colors">
                         Login

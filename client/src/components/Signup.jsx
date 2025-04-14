@@ -106,7 +106,7 @@ function Signup() {
 
             {/* Right side - Signup form */}
             <div className="w-2/5 bg-[#B3A9A2] flex flex-col items-center justify-center p-8">
-                <h2 className="text-6xl font-bold text-white mb-8">Signup</h2>
+                <h2 className="text-6xl font-bold text-white mb-8">Register</h2>
                 <p className="text-gray-800 text-xl font-medium mb-4">Create your account</p>
 
                 <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>

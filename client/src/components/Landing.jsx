@@ -8,7 +8,7 @@ const Landing = () => {
                 <h1 className="text-4xl font-bold text-[#4A4A4A]">FinanceEase</h1>
                 <div className="flex gap-7 px-10">
                     <Link to="/signup" className="bg-[#B3A9A2] text-white text-lg px-4 py-1 rounded hover:bg-[#a39890] transition-colors">
-                        Sign up
+                        Register
                     </Link>
                     <Link to="/login" className="bg-[#B3A9A2] text-white text-lg px-4 py-1 rounded hover:bg-[#a39890] transition-colors">
                         Login
@@ -109,7 +109,7 @@ const Landing = () => {
 
             <footer className="bg-[#4A4A4A] text-white py-6">
                 <div className="max-w-6xl mx-auto flex justify-between">
-                    <p>&copy; 2025 FinanceEase. All rights reserved.</p>
+                    <p> 2025 FinanceEase.</p>
                     <div className="flex gap-4">
                         <Link to="/about" className="hover:underline">About Us</Link>
                         <Link to="/contact" className="hover:underline">Contact</Link>
