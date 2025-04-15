@@ -137,7 +137,7 @@ function Login() {
                     <p className="text-[#4A4A4A]">
                         Don't have an account?{" "}
                         <Link to="/signup" className="text-blue-900 font-bold hover:underline">
-                            Signup
+                            Register
                         </Link>
                     </p>
                 </div>
