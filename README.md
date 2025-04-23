@@ -3,6 +3,8 @@
 ## Overview
 FinanceEase is a comprehensive personal finance management platform designed to help users take control of their finances. It provides tools for budgeting, investment tracking, goal setting, and more, while also offering expert advice through blogs and consultations. The platform ensures secure access with role-based authentication for users and financial experts.
 
+![FinanceEase Overview](client/public/LandingPage.png "FinanceEase Overview")
+
 ## Features
 - **Budget Management**: Track expenses and set budgets to manage your finances effectively.
 - **Investment Tracking**: Monitor your investments and portfolio performance.
