@@ -131,29 +131,29 @@ function Profile() {
             isValid = false;
         }
 
-        if (!String(editUser.phone).trim()) {
-            errors.phone = "Phone number is required.";
-            isValid = false;
-        } else if (!/^\d{10}$/.test(editUser.phone)) {
-            errors.phone = "Phone number must be 10 digits.";
-            isValid = false;
-        }
+        // if (!String(editUser.phone).trim()) {
+        //     errors.phone = "Phone number is required.";
+        //     isValid = false;
+        // } else if (!/^\d{10}$/.test(editUser.phone)) {
+        //     errors.phone = "Phone number must be 10 digits.";
+        //     isValid = false;
+        // }
 
-        if (!String(editUser.age).trim()) {
-            errors.age = "Age is required.";
-            isValid = false;
-        } else if (isNaN(editUser.age) || Number(editUser.age) <= 0) {
-            errors.age = "Age must be a positive number.";
-            isValid = false;
-        }
+        // if (!String(editUser.age).trim()) {
+        //     errors.age = "Age is required.";
+        //     isValid = false;
+        // } else if (isNaN(editUser.age) || Number(editUser.age) <= 0) {
+        //     errors.age = "Age must be a positive number.";
+        //     isValid = false;
+        // }
 
-        if (!String(editUser.maritalStatus).trim()) {
-            errors.maritalStatus = "Marital status is required.";
-            isValid = false;
-        } else if (!["Single", "Married", "Divorced"].includes(editUser.maritalStatus)) {
-            errors.maritalStatus = "Marital status must be 'Single', 'Married', or 'Divorced'.";
-            isValid = false;
-        }
+        // if (!String(editUser.maritalStatus).trim()) {
+        //     errors.maritalStatus = "Marital status is required.";
+        //     isValid = false;
+        // } else if (!["Single", "Married", "Divorced"].includes(editUser.maritalStatus)) {
+        //     errors.maritalStatus = "Marital status must be 'Single', 'Married', or 'Divorced'.";
+        //     isValid = false;
+        // }
 
         setEditUserErrors(errors);
         return isValid;
@@ -526,7 +526,7 @@ function Profile() {
                                     onChange={(e) => setEditUser({ ...editUser, phone: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                                 />
-                                {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>}
+                                {/* {editUserErrors.phone && <p className="text-red-500 text-sm mt-1">{editUserErrors.phone}</p>} */}
                             </div>
                             <div>
                                 <label className="block text-lg font-medium text-gray-800">Age</label>
@@ -537,7 +537,7 @@ function Profile() {
                                     onChange={(e) => setEditUser({ ...editUser, age: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                                 />
-                                {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>}
+                                {/* {editUserErrors.age && <p className="text-red-500 text-sm mt-1">{editUserErrors.age}</p>} */}
                             </div>
                             <div>
                                 <label className="block text-lg font-medium text-gray-800">Marital Status</label>
@@ -548,7 +548,7 @@ function Profile() {
                                     onChange={(e) => setEditUser({ ...editUser, maritalStatus: e.target.value })}
                                     className="mt-1 block w-full bg-[#D8CFD0] rounded-md shadow-sm p-2 focus:outline-none focus:border-none"
                                 />
-                                {editUserErrors.maritalStatus && <p className="text-red-500 text-md mt-1">{editUserErrors.maritalStatus}</p>}
+                                {/* {editUserErrors.maritalStatus && <p className="text-red-500 text-md mt-1">{editUserErrors.maritalStatus}</p>} */}
                             </div>
                             <div className="flex justify-center space-x-2">
                                 <button
