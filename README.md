@@ -14,6 +14,23 @@ FinanceEase is a comprehensive personal finance management platform designed to 
 - **Role-Based Access Control**: Tailored dashboards for users and financial experts.
 - **Secure Authentication**: JWT-based authentication with cookie storage for enhanced security.
 
+### **User overview page**
+
+![Overview Page](client/public/OverviewPage.jpg "Overview Page")
+
+**Investments Page**
+![Investments Page](client/public/InvestmentPage.png "Investments Page")
+
+**Goals Page**
+![Goals Page](client/public/GoalPage.png "Budget Page")
+
+**Profile Page**
+![Profile Page](client/public/ProfilePage.png "Profile Page")
+
+**Blogs Page**
+![Blogs Page](client/public/BlogPage.png "Blogs Page")
+
+
 ## Technologies Used
 ### Frontend
 - React.js: For building a dynamic and responsive user interface.
